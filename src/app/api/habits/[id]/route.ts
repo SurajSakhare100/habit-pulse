@@ -15,7 +15,7 @@ export async function GET(
     }
 
     await dbConnect();
-    const id = params.id;
+    const id = await params.id;
     const habit = await HabitModel.findOne({
       _id: id,
       userId: session.user.id,
@@ -53,7 +53,7 @@ export async function PUT(
     }
 
     await dbConnect();
-    const id = params.id;
+    const id = await params.id;
 
     const habit = await HabitModel.findOneAndUpdate(
       {
@@ -87,7 +87,7 @@ export async function POST(
 
     const { date, status } = await request.json();
     await dbConnect();
-    const id = params.id;
+    const id = await params.id;
 
     const habit = await HabitModel.findOne({
       _id: id,
@@ -126,7 +126,7 @@ export async function DELETE(
     }
 
     await dbConnect();
-    const id = params.id;
+    const id = await params.id;
     const habit = await HabitModel.findOneAndDelete({
       _id: id,
       userId: session.user.id,
