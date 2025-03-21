@@ -33,6 +33,4 @@
     "types/**/*.d.ts"
   ],
   "exclude": ["node_modules"],
-  "ignoreErrors": true,
-  "noEmit": false
 }
