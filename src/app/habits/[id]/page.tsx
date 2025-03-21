@@ -132,12 +132,24 @@ export default function HabitPage() {
     }
   };
 
-  const updateHabit = async () => {
-    if (!habit || !editingHabit) return;
-    
+  const handleSaveEdit = async () => {
+    if (!editingHabit) return;
+
     try {
-      const { _id, ...updateData } = editingHabit;
-      const response = await axios.put(`/api/habits/${params.id}`, updateData);
+      const frequency = editingHabit.goal.frequency;
+      
+      // Client-side validation first
+      if (!Number.isInteger(frequency) || frequency < 1 || frequency > 7) {
+        toast({
+          title: "Invalid Goal",
+          description: "Goal must be a whole number between 1 and 7 days per week",
+          variant: "destructive",
+          className: "bg-red-900 text-white border-red-800",
+        });
+        return;
+      }
+
+      const response = await axios.put(`/api/habits/${params.id}`, editingHabit);
       setHabit(response.data);
       setIsEditOpen(false);
       toast({
@@ -145,13 +157,23 @@ export default function HabitPage() {
         description: "Habit updated successfully",
         className: "bg-gray-900 text-white border-gray-800",
       });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update habit",
-        variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
-      });
+    } catch (error: any) {
+      // Show validation error from server in toast
+      if (error.response?.status === 400) {
+        toast({
+          title: "Invalid Goal",
+          description: error.response.data || "Goal must be a whole number between 1 and 7 days per week",
+          variant: "destructive",
+          className: "bg-red-900 text-white border-red-800",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to update habit",
+          variant: "destructive",
+          className: "bg-red-900 text-white border-red-800",
+        });
+      }
     }
   };
 
@@ -282,12 +304,15 @@ export default function HabitPage() {
                           min={1}
                           max={7}
                           value={editingHabit.goal.frequency}
-                          onChange={(e) => setEditingHabit(prev => prev ? ({
-                            ...prev,
-                            goal: {
-                              frequency: parseInt(e.target.value) || 1
-                            }
-                          }) : null)}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value);
+                            setEditingHabit(prev => prev ? ({
+                              ...prev,
+                              goal: {
+                                frequency: value || 1
+                              }
+                            }) : null);
+                          }}
                           className="bg-gray-800 border-gray-700 text-white w-20"
                         />
                       </div>
@@ -326,7 +351,7 @@ export default function HabitPage() {
                     </div>
 
                     <Button 
-                      onClick={updateHabit}
+                      onClick={handleSaveEdit}
                       className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                     >
                       Save Changes

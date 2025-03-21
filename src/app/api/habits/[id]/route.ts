@@ -6,6 +6,7 @@ import HabitModel, { IHabitLog } from "@/models/Habit";
 
 export async function GET(
   request: NextRequest,
+  { params }: { params: { id?: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -14,8 +15,7 @@ export async function GET(
     }
 
     await dbConnect();
-    const url = new URL(request.url);
-    const id = url.searchParams.get("id");
+    const id = params.id;
     const habit = await HabitModel.findOne({
       _id: id,
       userId: session.user.id,
@@ -34,6 +34,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
+  { params }: { params: { id?: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -52,8 +53,7 @@ export async function PUT(
     }
 
     await dbConnect();
-    const url = new URL(request.url);
-    const id = url.searchParams.get("id");
+    const id = params.id;
 
     const habit = await HabitModel.findOneAndUpdate(
       {
@@ -77,6 +77,7 @@ export async function PUT(
 
 export async function POST(
   request: NextRequest,
+  { params }: { params: { id?: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -86,8 +87,7 @@ export async function POST(
 
     const { date, status } = await request.json();
     await dbConnect();
-    const url = new URL(request.url);
-    const id = url.searchParams.get("id");
+    const id = params.id;
 
     const habit = await HabitModel.findOne({
       _id: id,
@@ -117,6 +117,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
+  { params }: { params: { id?: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -125,8 +126,7 @@ export async function DELETE(
     }
 
     await dbConnect();
-    const url = new URL(request.url);
-    const id = url.searchParams.get("id");
+    const id = params.id;
     const habit = await HabitModel.findOneAndDelete({
       _id: id,
       userId: session.user.id,
