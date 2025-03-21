@@ -6,7 +6,7 @@
 
 
 @custom-variant dark (&:is(.dark *));
-
+/* 
 @layer base {
   :root {
     --background: oklch(1 0 0);
@@ -52,10 +52,6 @@
     --input: oklch(0.3 0 0);
     --ring: oklch(0.7 0.2 250);
   }
-
-  /* * {
-    @apply border-border outline-ring/50;
-  } */
   body {
     @apply bg-background text-foreground;
   }
@@ -65,4 +61,4 @@
   .outline-ring\/50 {
     outline: 1px solid color-mix(in oklch, var(--ring) 10%, transparent);
   }
-}
+} */
