@@ -7,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Daily Habit",
+  title: "Habit Pulse",
   description: "Track your daily habits",
   icons: {
     icon: "/icon.png",
