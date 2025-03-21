@@ -29,6 +29,13 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+
+    // Validate goal frequency
+    const frequency = body.goal?.frequency;
+    if (!Number.isInteger(frequency) || frequency < 1 || frequency > 7) {
+      return new NextResponse("Goal frequency must be a whole number between 1 and 7", { status: 400 });
+    }
+
     await dbConnect();
 
     const newHabit: IHabit = {

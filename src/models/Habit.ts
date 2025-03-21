@@ -15,7 +15,7 @@ export interface IHabit {
   color: string;
   description?: string;
   goal: {
-    frequency: number;  // times per week
+    frequency: number;  // times per week (1-7)
   };
   logs: IHabitLog[];
   createdAt: Date;
@@ -30,7 +30,16 @@ const habitSchema = new Schema<IHabit>(
     color: { type: String, default: "#22c55e" },
     description: { type: String },
     goal: {
-      frequency: { type: Number, default: 7 },
+      frequency: { 
+        type: Number, 
+        default: 7,
+        min: [1, 'Goal frequency must be at least 1'],
+        max: [7, 'Goal frequency cannot exceed 7'],
+        validate: {
+          validator: Number.isInteger,
+          message: 'Goal frequency must be a whole number'
+        }
+      },
     },
     logs: [
       {

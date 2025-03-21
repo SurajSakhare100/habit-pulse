@@ -1,9 +1,10 @@
 "use client";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export default function ErrorPage() {
+function ErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
@@ -21,19 +22,33 @@ export default function ErrorPage() {
   };
 
   return (
+    <Card className="p-8 max-w-sm w-full bg-gray-900 border-gray-800">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl font-bold text-white mb-2">Authentication Error</h1>
+        <p className="text-gray-400">{getErrorMessage()}</p>
+      </div>
+      <Button
+        className="w-full"
+        onClick={() => window.location.href = "/auth/signin"}
+      >
+        Try Again
+      </Button>
+    </Card>
+  );
+}
+
+export default function ErrorPage() {
+  return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <Card className="p-8 max-w-sm w-full bg-gray-900 border-gray-800">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-white mb-2">Authentication Error</h1>
-          <p className="text-gray-400">{getErrorMessage()}</p>
-        </div>
-        <Button
-          className="w-full"
-          onClick={() => window.location.href = "/auth/signin"}
-        >
-          Try Again
-        </Button>
-      </Card>
+      <Suspense fallback={
+        <Card className="p-8 max-w-sm w-full bg-gray-900 border-gray-800">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold text-white mb-2">Loading...</h1>
+          </div>
+        </Card>
+      }>
+        <ErrorContent />
+      </Suspense>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import dbConnect from "@/lib/db";
-import HabitModel from "@/models/Habit";
+import HabitModel, { IHabitLog } from "@/models/Habit";
 
 export async function GET(
   request: NextRequest,
@@ -13,9 +13,8 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-
     await dbConnect();
-    const url=new URL(request.url);
+    const url = new URL(request.url);
     const id = url.searchParams.get("id");
     const habit = await HabitModel.findOne({
       _id: id,
@@ -43,8 +42,17 @@ export async function PUT(
     }
 
     const body = await request.json();
+
+    // Validate goal frequency if it's being updated
+    if (body.goal?.frequency !== undefined) {
+      const frequency = body.goal.frequency;
+      if (!Number.isInteger(frequency) || frequency < 1 || frequency > 7) {
+        return new NextResponse("Goal frequency must be a whole number between 1 and 7", { status: 400 });
+      }
+    }
+
     await dbConnect();
-    const url=new URL(request.url);
+    const url = new URL(request.url);
     const id = url.searchParams.get("id");
 
     const habit = await HabitModel.findOneAndUpdate(
@@ -52,7 +60,7 @@ export async function PUT(
         _id: id,
         userId: session.user.id,
       },
-      { $set: body },
+      { $set: { ...body, updatedAt: new Date() } },
       { new: true }
     );
 
@@ -78,7 +86,7 @@ export async function POST(
 
     const { date, status } = await request.json();
     await dbConnect();
-    const url=new URL(request.url);
+    const url = new URL(request.url);
     const id = url.searchParams.get("id");
 
     const habit = await HabitModel.findOne({
@@ -90,9 +98,10 @@ export async function POST(
       return new NextResponse("Habit not found", { status: 404 });
     }
 
-    const existingLogIndex = habit.logs.findIndex((log: { date: string }) => log.date === date);
+    // Update or add the log entry
+    const existingLogIndex = habit.logs.findIndex((log: IHabitLog) => log.date === date);
     if (existingLogIndex !== -1) {
-      habit.logs[existingLogIndex].status = !habit.logs[existingLogIndex].status;
+      habit.logs[existingLogIndex].status = status;
     } else {
       habit.logs.push({ date, status });
     }
@@ -116,7 +125,7 @@ export async function DELETE(
     }
 
     await dbConnect();
-    const url=new URL(request.url);
+    const url = new URL(request.url);
     const id = url.searchParams.get("id");
     const habit = await HabitModel.findOneAndDelete({
       _id: id,
