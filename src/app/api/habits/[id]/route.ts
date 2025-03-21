@@ -4,9 +4,13 @@ import { authOptions } from "@/lib/auth";
 import dbConnect from "@/lib/db";
 import HabitModel from "@/models/Habit";
 
+interface RouteParams {
+  params: { id: string };
+}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -35,7 +39,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -69,7 +73,7 @@ export async function PUT(
 
 export async function POST(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -79,7 +83,7 @@ export async function POST(
 
     const { date, status } = await request.json();
     await dbConnect();
-    const { id } = context.params;
+    const { id } = params;
 
     const habit = await HabitModel.findOne({
       _id: id,
@@ -97,7 +101,7 @@ export async function POST(
       habit.logs.push({ date, status });
     }
 
-    await HabitModel.updateOne({ _id: context.params.id, userId: session.user.id }, { $set: { logs: habit.logs } });
+    await HabitModel.updateOne({ _id: id, userId: session.user.id }, { $set: { logs: habit.logs } });
 
     return NextResponse.json(habit);
   } catch (error) {
@@ -108,7 +112,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: RouteParams
 ) {
   try {
     const session = await getServerSession(authOptions);
