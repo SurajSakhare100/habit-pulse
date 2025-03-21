@@ -2,13 +2,13 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/lib/db";
 import UserModel from "@/models/User";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 if (!process.env.NEXTAUTH_SECRET) {
   throw new Error("Please provide process.env.NEXTAUTH_SECRET");
 }
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -65,13 +65,5 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// **Correct API Route Export for App Router**
 const handler = NextAuth(authOptions);
-
-export function GET(req: NextRequest) {
-  return handler(req as any, {} as any);
-}
-
-export function POST(req: NextRequest) {
-  return handler(req as any, {} as any);
-}
+export { handler as GET, handler as POST };
