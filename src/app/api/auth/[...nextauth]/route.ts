@@ -1,14 +1,14 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { NextAuthOptions } from "next-auth";
 import dbConnect from "@/lib/db";
 import UserModel from "@/models/User";
+import { NextRequest, NextResponse } from "next/server";
 
 if (!process.env.NEXTAUTH_SECRET) {
   throw new Error("Please provide process.env.NEXTAUTH_SECRET");
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -24,13 +24,11 @@ export const authOptions: NextAuthOptions = {
     error: "/auth/error",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       if (!user.email) return false;
 
       try {
         await dbConnect();
-        
-        // Find or create user
         const existingUser = await UserModel.findOne({ email: user.email });
         if (!existingUser) {
           await UserModel.create({
@@ -45,12 +43,7 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
-      
-      // Add user id to token
+    async jwt({ token }) {
       try {
         await dbConnect();
         const user = await UserModel.findOne({ email: token.email });
@@ -60,7 +53,6 @@ export const authOptions: NextAuthOptions = {
       } catch (error) {
         console.error("Error in jwt callback:", error);
       }
-      
       return token;
     },
     async session({ session, token }) {
@@ -73,5 +65,13 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+// **Correct API Route Export for App Router**
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+
+export function GET(req: NextRequest) {
+  return handler(req as any, {} as any);
+}
+
+export function POST(req: NextRequest) {
+  return handler(req as any, {} as any);
+}
