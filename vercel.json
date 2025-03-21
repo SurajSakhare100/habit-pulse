@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "buildCommand": "npm install --force && npm run build",
+  "builds": [
+    {
+      "src": "./*",
+      "use": "@vercel/node"
+    }
+  ],
   "installCommand": "npm install --force",
-  "framework": "nextjs",
-  "regions": [
-    "bom1"
-  ]
+  "buildCommand": "npm install --force && npm run build"
 }
