@@ -4,6 +4,7 @@
 
 @import "tw-animate-css";
 
+/*
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -58,4 +59,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
