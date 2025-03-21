@@ -6,7 +6,7 @@ import HabitModel from "@/models/Habit";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -14,9 +14,11 @@ export async function GET(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+
     await dbConnect();
+    const { id } = params;
     const habit = await HabitModel.findOne({
-      _id: context.params.id,
+      _id: id,
       userId: session.user.id,
     });
 
@@ -33,7 +35,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -43,10 +45,11 @@ export async function PUT(
 
     const body = await request.json();
     await dbConnect();
+    const { id } = params;
 
     const habit = await HabitModel.findOneAndUpdate(
       {
-        _id: context.params.id,
+        _id: id,
         userId: session.user.id,
       },
       { $set: body },
@@ -76,9 +79,10 @@ export async function POST(
 
     const { date, status } = await request.json();
     await dbConnect();
+    const { id } = context.params;
 
     const habit = await HabitModel.findOne({
-      _id: context.params.id,
+      _id: id,
       userId: session.user.id,
     });
 
@@ -104,7 +108,7 @@ export async function POST(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -113,8 +117,9 @@ export async function DELETE(
     }
 
     await dbConnect();
+    const { id } = params;
     const habit = await HabitModel.findOneAndDelete({
-      _id: context.params.id,
+      _id: id,
       userId: session.user.id,
     });
 
