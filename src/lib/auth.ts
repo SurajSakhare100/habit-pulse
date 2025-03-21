@@ -1,7 +1,11 @@
-import { getServerSession } from "next-auth";
-import { NextAuthOptions } from "next-auth";
+import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { JWT } from "next-auth/jwt";
+import dbConnect from "@/lib/db";
+import UserModel from "@/models/User";
+
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error("Please provide process.env.NEXTAUTH_SECRET");
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -10,23 +14,58 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  pages: {
+    signIn: "/auth/signin",
+    error: "/auth/error",
+  },
   callbacks: {
-    async jwt({ token, account }) {
-      if (account) {
-        token.id = account.providerAccountId;
+    async signIn({ user }) {
+      if (!user.email) return false;
+
+      try {
+        await dbConnect();
+        const existingUser = await UserModel.findOne({ email: user.email });
+        if (!existingUser) {
+          await UserModel.create({
+            name: user.name,
+            email: user.email,
+            image: user.image,
+          });
+        }
+        return true;
+      } catch (error) {
+        console.error("Error in signIn callback:", error);
+        return false;
       }
-      return token;
     },
-    async session({ session, token }) {
-      if (session.user && token) {
-        session.user.id = token.id as string;
+    async jwt({ token }) {
+      try {
+        await dbConnect();
+        const user = await UserModel.findOne({ email: token.email });
+        if (user) {
+          token.id = user._id.toString();
+        }
+        return token;
+      } catch (error) {
+        console.error("Error in jwt callback:", error);
+        return token;
+      }
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      if (token.id) {
+        session.user = {
+          ...session.user,
+          id: token.id
+        };
       }
       return session;
     },
   },
-  pages: {
-    signIn: "/auth/signin",
-  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export const getAuthSession = () => getServerSession(authOptions);
