@@ -3,6 +3,7 @@ module.exports = {
   // Enable dark mode using the 'class' strategy, matching the CSS's use of '.dark'
   darkMode: 'class',
   content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}", // If using the App Router (Next.js 13+)
