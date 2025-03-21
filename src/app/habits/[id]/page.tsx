@@ -251,7 +251,7 @@ export default function HabitPage() {
             <span className="text-4xl">{habit.emoji}</span>
             <div>
               <h1 className="text-3xl font-bold text-white">{habit.habitName}</h1>
-              <p className="text-gray-400">
+              <p className="text-gray-500">
                 Goal: {habit.goal.frequency} times per week
               </p>
             </div>
@@ -275,7 +275,7 @@ export default function HabitPage() {
                     });
                   }}
                 >
-                  <Pencil className="h-4 w-4" />
+                  <Pencil className="h-4 w-4 text-gray-500" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-[300px]">

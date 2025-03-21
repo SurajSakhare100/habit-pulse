@@ -4,7 +4,7 @@
 
 @import "tw-animate-css";
 
-/*
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -53,10 +53,16 @@
     --ring: oklch(0.7 0.2 250);
   }
 
-  * {
+  /* * {
     @apply border-border outline-ring/50;
-  }
+  } */
   body {
     @apply bg-background text-foreground;
   }
-} */
+} 
+
+@layer utilities {
+  .outline-ring\/50 {
+    outline: 1px solid color-mix(in oklch, var(--ring) 10%, transparent);
+  }
+}
