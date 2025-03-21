@@ -325,7 +325,91 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
+<div className="flex items-center gap-2">
+            <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+              
+              <DialogContent className="max-w-[300px]">
+                <DialogHeader>
+                  <DialogTitle className="text-white">Edit Habit</DialogTitle>
+                </DialogHeader>
+                {editingHabit && (
+                  <div className="space-y-4">
+                    <div className="flex gap-2">
+                      <div className="flex-1">
+                        <label className="text-sm text-gray-400 mb-2 block">Name</label>
+                        <Input
+                          value={editingHabit.habitName}
+                          onChange={(e) => setEditingHabit(prev => prev ? ({
+                            ...prev,
+                            habitName: e.target.value
+                          }) : null)}
+                          className="bg-gray-800 border-gray-700 text-white"
+                        />
+                      </div>
 
+                      <div>
+                        <label className="text-sm text-gray-400 mb-2 block">Goal</label>
+                        <Input
+                          type="number"
+                          min={1}
+                          max={7}
+                          value={editingHabit.goal.frequency}
+                          onChange={(e) => setEditingHabit(prev => prev ? ({
+                            ...prev,
+                            goal: {
+                              frequency: parseInt(e.target.value) || 1
+                            }
+                          }) : null)}
+                          className="bg-gray-800 border-gray-700 text-white w-20"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="text-sm text-gray-400 mb-2 block">Emoji</label>
+                      <EmojiPicker
+                        theme={Theme.DARK}
+                        lazyLoadEmojis
+                        height={350}
+                        width="100%"
+                        onEmojiClick={(emoji) => setEditingHabit(prev => prev ? ({
+                          ...prev,
+                          emoji: emoji.emoji
+                        }) : null)}
+                        autoFocusSearch
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-sm text-gray-400 mb-2 block">Color</label>
+                      <div className="flex gap-2">
+                        {PRESET_COLORS.map((color) => (
+                          <button
+                            key={color}
+                            className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ring-white' : ''}`}
+                            style={{ backgroundColor: color }}
+                            onClick={() => setEditingHabit(prev => prev ? ({
+                              ...prev,
+                              color
+                            }) : null)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <Button 
+                      onClick={()=>updateHabit(editingHabit._id,editingHabit)}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      Save Changes
+                    </Button>
+                  </div>
+                )}
+              </DialogContent>
+            </Dialog>
+           
+          </div>
         
       </div>
 
@@ -404,6 +488,7 @@ export default function Home() {
           </div>
         )}
       </div>
+
     </div>
   );
 }

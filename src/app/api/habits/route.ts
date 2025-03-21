@@ -14,7 +14,6 @@ export async function GET(request: Request) {
 
     await dbConnect();
     const habits = await HabitModel.find({ userId: session.user.id });
-    console.log(habits);
     return NextResponse.json(habits);
   } catch (error) {
     console.error("Error in GET /api/habits:", error);
