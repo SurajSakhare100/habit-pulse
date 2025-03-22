@@ -5,6 +5,28 @@ import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/db';
 import HabitModel from '@/models/Habit';
 
+interface Log {
+  date: string;
+  status: boolean;
+}
+
+interface Habit {
+  userId: string;
+  logs: Log[];
+}
+
+interface DayData {
+  completed: number;
+  total: number;
+}
+
+interface WeekDay {
+  date: string;
+  day: string;
+  dayNum: number;
+  completionRate: number;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -13,7 +35,7 @@ export async function GET(request: NextRequest) {
     }
 
     await dbConnect();
-    const habits = await HabitModel.find({ userId: session.user.id }).lean();
+    const habits: Habit[] = await HabitModel.find({ userId: session.user.id }).lean();
     if (!habits.length) {
       return NextResponse.json(getEmptyWeek(), { status: 200 });
     }
@@ -24,7 +46,7 @@ export async function GET(request: NextRequest) {
     startOfWeek.setHours(0, 0, 0, 0);
 
     // Aggregate logs by date
-    const logsByDate = {};
+    const logsByDate: Record<string, DayData> = {};
     habits.forEach((habit) => {
       habit.logs.forEach((log) => {
         const logDate = log.date.split('T')[0]; // Ensure YYYY-MM-DD
@@ -35,10 +57,10 @@ export async function GET(request: NextRequest) {
     });
 
     // Build week data
-    const weekData = [];
+    const weekData: WeekDay[] = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
-      date.setDate(startOfWeek.getDate() + i+1);
+      date.setDate(startOfWeek.getDate() + i + 1);
       const dateStr = date.toISOString().split('T')[0];
 
       const dayData = logsByDate[dateStr] || { completed: 0, total: habits.length };
@@ -47,7 +69,7 @@ export async function GET(request: NextRequest) {
       weekData.push({
         date: dateStr,
         day: date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
-        dayNum: date.getDate()-1,
+        dayNum: date.getDate() - 1,
         completionRate: Math.round(completionRate),
       });
     }
@@ -58,13 +80,13 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function getEmptyWeek() {
+function getEmptyWeek(): WeekDay[] {
   const today = new Date();
   const startOfWeek = new Date(today);
   startOfWeek.setDate(today.getDate() - today.getDay());
   startOfWeek.setHours(0, 0, 0, 0);
 
-  const days = [];
+  const days: WeekDay[] = [];
   for (let i = 0; i < 7; i++) {
     const date = new Date(startOfWeek);
     date.setDate(startOfWeek.getDate() + i);
