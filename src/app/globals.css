@@ -4,20 +4,19 @@
 
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
-    --background: oklch(1 0 0);
+    --background: #F9F8F6;
     --foreground: oklch(0.2 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.2 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.2 0 0);
-    --primary: oklch(0.6 0.2 250);
+    --primary: oklch(0.6 0.2 145);
     --primary-foreground: oklch(1 0 0);
-    --secondary: oklch(0.95 0 0);
+    --secondary: #FFFFFF;
     --secondary-foreground: oklch(0.2 0 0);
     --muted: oklch(0.95 0 0);
     --muted-foreground: oklch(0.6 0 0);
@@ -27,20 +26,20 @@
     --destructive-foreground: oklch(1 0 0);
     --border: oklch(0.9 0 0);
     --input: oklch(0.9 0 0);
-    --ring: oklch(0.6 0.2 250);
+    --ring: #222325;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: oklch(0.2 0 0);
+    --background: #1D1E20;
     --foreground: oklch(0.95 0 0);
     --card: oklch(0.2 0 0);
     --card-foreground: oklch(0.95 0 0);
     --popover: oklch(0.2 0 0);
     --popover-foreground: oklch(0.95 0 0);
-    --primary: oklch(0.7 0.2 250);
+    --primary: oklch(0.7 0.2 145);
     --primary-foreground: oklch(0.2 0 0);
-    --secondary: oklch(0.3 0 0);
+    --secondary: #2D2E2F;
     --secondary-foreground: oklch(0.95 0 0);
     --muted: oklch(0.3 0 0);
     --muted-foreground: oklch(0.7 0 0);
@@ -50,15 +49,16 @@
     --destructive-foreground: oklch(1 0 0);
     --border: oklch(0.3 0 0);
     --input: oklch(0.3 0 0);
-    --ring: oklch(0.7 0.2 250);
+    --ring: #222325;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-} 
+}
 
 @layer utilities {
   .outline-ring\/50 {
-    outline: 1px solid color-mix(in oklch, var(--ring) 10%, transparent);
+    outline: 0.5px solid #222325;
   }
 }

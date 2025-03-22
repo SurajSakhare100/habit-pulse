@@ -8,13 +8,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./app/**/*.{js,ts,jsx,tsx}", // If using the App Router (Next.js 13+)
   ],
-  
+
   theme: {
-    // Extend the default theme rather than overriding it
     extend: {
-      // Define colors to use the CSS variables from the provided CSS
       colors: {
         background: 'var(--background)',
+        'secondary-bg': 'var(--secondary-bg)',
         foreground: 'var(--foreground)',
         card: 'var(--card)',
         'card-foreground': 'var(--card-foreground)',
@@ -40,7 +39,7 @@ module.exports = {
       },
     },
   },
-  
+
   // No additional plugins are specified, so keep it empty
   plugins: [],
 }

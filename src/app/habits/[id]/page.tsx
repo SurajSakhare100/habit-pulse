@@ -7,7 +7,6 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { IHabit } from "@/models/Habit";
-import { LineChart } from "@/components/line-chart";
 import { format, startOfWeek, eachDayOfInterval, addDays, startOfMonth, endOfMonth, isSameMonth } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -50,7 +49,7 @@ export default function HabitPage() {
         title: "Error",
         description: "Failed to fetch habit",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-900  border-red-800",
       });
     } finally {
       setLoading(false);
@@ -120,14 +119,14 @@ export default function HabitPage() {
       toast({
         title: "Success",
         description: "Progress updated successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+        className: " border-gray-800",
       });
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to update progress",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-900  border-red-800",
       });
     }
   };
@@ -144,7 +143,7 @@ export default function HabitPage() {
           title: "Invalid Goal",
           description: "Goal must be a whole number between 1 and 7 days per week",
           variant: "destructive",
-          className: "bg-red-900 text-white border-red-800",
+          className: "bg-red-900  border-red-800",
         });
         return;
       }
@@ -155,7 +154,7 @@ export default function HabitPage() {
       toast({
         title: "Success",
         description: "Habit updated successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+        className: " border-gray-800",
       });
     } catch (error: any) {
       // Show validation error from server in toast
@@ -164,14 +163,14 @@ export default function HabitPage() {
           title: "Invalid Goal",
           description: error.response.data || "Goal must be a whole number between 1 and 7 days per week",
           variant: "destructive",
-          className: "bg-red-900 text-white border-red-800",
+          className: "bg-red-900  border-red-800",
         });
       } else {
         toast({
           title: "Error",
           description: "Failed to update habit",
           variant: "destructive",
-          className: "bg-red-900 text-white border-red-800",
+          className: "bg-red-900  border-red-800",
         });
       }
     }
@@ -185,7 +184,7 @@ export default function HabitPage() {
       toast({
         title: "Success",
         description: "Habit deleted successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+        className: " border-gray-800",
       });
       router.push('/');
     } catch (error) {
@@ -193,7 +192,7 @@ export default function HabitPage() {
         title: "Error",
         description: "Failed to delete habit",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-900  border-red-800",
       });
     }
   };
@@ -250,7 +249,7 @@ export default function HabitPage() {
           <div className="flex items-center gap-4">
             <span className="text-4xl">{habit.emoji}</span>
             <div>
-              <h1 className="text-3xl font-bold text-white">{habit.habitName}</h1>
+              <h1 className="text-3xl font-bold ">{habit.habitName}</h1>
               <p className="text-gray-500">
                 Goal: {habit.goal.frequency} times per week
               </p>
@@ -262,7 +261,7 @@ export default function HabitPage() {
                 <Button 
                   variant="ghost" 
                   size="icon"
-                  className="text-gray-400 hover:text-white hover:bg-gray-700"
+                  className="text-gray-400 "
                   onClick={() => {
                     setEditingHabit({
                       ...habit,
@@ -275,12 +274,12 @@ export default function HabitPage() {
                     });
                   }}
                 >
-                  <Pencil className="h-4 w-4 text-gray-500" />
+                  <Pencil className="h-4 w-4 " />
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-[300px]">
                 <DialogHeader>
-                  <DialogTitle className="text-white">Edit Habit</DialogTitle>
+                  <DialogTitle className="">Edit Habit</DialogTitle>
                 </DialogHeader>
                 {editingHabit && (
                   <div className="space-y-4">
@@ -293,7 +292,7 @@ export default function HabitPage() {
                             ...prev,
                             habitName: e.target.value
                           }) : null)}
-                          className="bg-gray-800 border-gray-700 text-white"
+                          className=" border-gray-700 "
                         />
                       </div>
 
@@ -313,7 +312,7 @@ export default function HabitPage() {
                               }
                             }) : null);
                           }}
-                          className="bg-gray-800 border-gray-700 text-white w-20"
+                          className=" border-gray-700  w-20"
                         />
                       </div>
                     </div>
@@ -321,7 +320,7 @@ export default function HabitPage() {
                     <div>
                       <label className="text-sm text-gray-400 mb-2 block">Emoji</label>
                       <EmojiPicker
-                        theme={Theme.DARK}
+                        theme={Theme.AUTO}
                         lazyLoadEmojis
                         height={350}
                         width="100%"
@@ -337,7 +336,7 @@ export default function HabitPage() {
                       <label className="text-sm text-gray-400 mb-2 block">Color</label>
                       <div className="flex gap-2">
                         {PRESET_COLORS.map((color) => (
-                          <button
+                          <Button
                             key={color}
                             className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ring-white' : ''}`}
                             style={{ backgroundColor: color }}
@@ -352,7 +351,7 @@ export default function HabitPage() {
 
                     <Button 
                       onClick={handleSaveEdit}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                      className="w-full bg-blue-600 hover:bg-blue-700 "
                     >
                       Save Changes
                     </Button>
@@ -373,10 +372,10 @@ export default function HabitPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {/* Weekly Progress */}
-          <Card className="bg-gray-900 p-6 rounded-2xl h-60">
-            <h2 className="text-xl font-semibold text-white mb-4">This Week</h2>
+          <Card className="p-6 rounded-2xl h-60">
+            <h2 className="text-xl font-semibold ">This Week</h2>
             <div className="flex items-center justify-between mb-4">
-              <div className="text-gray-400">
+              <div className="text-gray-500">
                 {weeklyProgress.days.filter(d => d.completed).length} of {habit.goal.frequency} days completed
               </div>
               <div className="text-2xl font-bold" style={{ color: habit.color }}>
@@ -384,7 +383,8 @@ export default function HabitPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2">
+            
+            <div className="grid grid-cols-7 gap-3">
               {weeklyProgress.days.map((day) => (
                 <button
                   key={day.date}
@@ -395,7 +395,7 @@ export default function HabitPage() {
                     color: day.completed ? 'white' : 'rgb(156, 163, 175)'
                   }}
                 >
-                  <span className="text-xs">{day.day}</span>
+                  <span className="text-xs mb-1">{day.day}</span>
                   <span className="text-sm mt-1">
                     {new Date(day.date).getDate()}
                   </span>
@@ -405,8 +405,8 @@ export default function HabitPage() {
           </Card>
 
           {/* Monthly Progress */}
-          {/* <Card className="bg-gray-900 p-6 rounded-2xl">
-            <h2 className="text-xl font-semibold text-white mb-4">This Month</h2>
+          {/* <Card className="p-6 rounded-2xl">
+            <h2 className="text-xl font-semibold  mb-4">This Month</h2>
             <div className="flex items-center justify-between mb-4">
               <div className="text-gray-400">
                 {monthlyProgress.completed} of {monthlyProgress.total} days completed
@@ -426,8 +426,8 @@ export default function HabitPage() {
             </div>
           </Card> */}
            {/* Calendar */}
-        <Card className="bg-gray-900 p-4 rounded-2xl">
-          <div className="flex items-center text-white justify-between mb-4">
+        <Card className="p-4 rounded-2xl">
+          <div className="flex items-center  justify-between mb-4">
             <Button variant="ghost" size="sm" onClick={() => changeMonth(-1)}><ArrowLeft className="mr-2 h-8 w-8 text-2xl" /></Button>
             <h2 className="text-lg font-semibold">
               {MONTHS[currentDate.getMonth()]} {currentDate.getFullYear()}
@@ -452,8 +452,8 @@ export default function HabitPage() {
                     onClick={() => toggleDay(day.date)}
                     className={`w-full h-full rounded-full flex items-center justify-center text-lg transition-all ${
                       day.checked
-                        ? 'text-white'
-                        : 'text-gray-400 hover:bg-gray-800'
+                        ? ''
+                        : 'text-gray-400 hover:'
                     }`}
                     style={{ 
                       backgroundColor: day.checked ? habit.color : undefined 

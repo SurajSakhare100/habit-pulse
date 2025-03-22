@@ -7,7 +7,7 @@ export default function SignIn() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950">
       <Card className="p-8 max-w-sm w-full bg-gray-900 border-gray-800">
-        <div className="text-center mb-8">
+        <div className="text-center mb-2">
           <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
           <p className="text-gray-400">Sign in to track your daily habits</p>
         </div>
@@ -37,9 +37,9 @@ export default function SignIn() {
           Continue with Google
         </Button>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
+        {/* <div className="mt-6 text-center text-sm text-gray-500">
           By signing in, you agree to our Terms of Service and Privacy Policy
-        </div>
+        </div> */}
       </Card>
     </div>
   );

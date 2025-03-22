@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -10,10 +11,30 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "./ui/button";
+import { Moon, Sun } from "lucide-react";
 
 export function Navigation() {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme) {
+        setTheme(storedTheme);
+        document.documentElement.classList.toggle("dark", storedTheme === "dark");
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
+  };
 
   if (!session) return null;
 
@@ -39,6 +60,12 @@ export function Navigation() {
           </Link>
         </div>
         <div className="ml-auto flex items-center space-x-4">
+          <Button
+            onClick={toggleTheme}
+            className="px-4 py-2 rounded-full bg-card text-card-foreground flex items-center space-x-2"
+            >
+            {theme === "light" ? <Moon size={20} /> : <Sun size={20}/>}
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="h-8 w-8 cursor-pointer">
