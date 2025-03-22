@@ -10,14 +10,16 @@ export const metadata = {
   title: "Habit Pulse",
   description: "Track your daily habits",
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
+   
       <body className={inter.className}>
         <AuthProvider>
           <Navigation />
