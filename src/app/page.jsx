@@ -190,11 +190,12 @@ export default function Home() {
     for (let i = 0; i < 7; i++) {
 
       const date = new Date(today);
-      date.setDate(today.getDate() - today.getDay() + i);
+      date.setDate(today.getDate() - today.getDay() + i+1);
       const dateStr = date.toISOString().split('T')[0];
       days.push({
         date: dateStr,
-        day: date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
+        day: date.toLocaleDateString('en-US', {  timeZone: 'Asia/Kolkata', 
+          weekday: 'short'}).toUpperCase(),
         dayNum: date.getDate(),
         checked: logs.some(log => log.date === dateStr && log.status)
       });

@@ -42,15 +42,14 @@ export async function GET(request: NextRequest) {
 
     const today = new Date();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(today.getDate() - today.getDay()+1);
 
     // Aggregate logs by date
     const logsByDate: Record<string, DayData> = {};
     habits.forEach((habit) => {
       if (habit.logs) {
         habit.logs.forEach((log:any) => {
-          const logDate = log.date.split('T')[0]; // Ensure YYYY-MM-DD
+          const logDate = log.date.split('T')[0]; 
           logsByDate[logDate] = logsByDate[logDate] || { completed: 0, total: 0 };
           logsByDate[logDate].total += 1;
           if (log.status) logsByDate[logDate].completed += 1;
@@ -62,7 +61,7 @@ export async function GET(request: NextRequest) {
     const weekData: WeekDay[] = [];
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
-      date.setDate(startOfWeek.getDate() + i + 1);
+      date.setDate(startOfWeek.getDate() + i);
       const dateStr = date.toISOString().split('T')[0];
 
       const dayData = logsByDate[dateStr] || { completed: 0, total: habits.length };
@@ -70,8 +69,9 @@ export async function GET(request: NextRequest) {
 
       weekData.push({
         date: dateStr,
-        day: date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
-        dayNum: date.getDate() - 1,
+        day: date.toLocaleDateString('en-US', {  timeZone: 'Asia/Kolkata', 
+          weekday: 'short'}).toUpperCase(),
+        dayNum: date.getDate(),
         completionRate: Math.round(completionRate),
       });
     }
