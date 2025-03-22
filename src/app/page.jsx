@@ -437,7 +437,7 @@ export default function Home() {
                       {PRESET_COLORS.map((color) => (
                         <button
                           key={color}
-                          className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ring-white' : ''}`}
+                          className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ' : ''}`}
                           style={{ backgroundColor: color }}
                           onClick={() => setEditingHabit(prev => prev ? ({
                             ...prev,
