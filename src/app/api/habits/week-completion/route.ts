@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     }
 
     await dbConnect();
-    const habits: Habit[] = await HabitModel.find({ userId: session.user.id }).lean();
+    const habits = await HabitModel.find({ userId: session.user.id }).lean();
     if (!habits.length) {
       return NextResponse.json(getEmptyWeek(), { status: 200 });
     }
@@ -48,12 +48,14 @@ export async function GET(request: NextRequest) {
     // Aggregate logs by date
     const logsByDate: Record<string, DayData> = {};
     habits.forEach((habit) => {
-      habit.logs.forEach((log) => {
-        const logDate = log.date.split('T')[0]; // Ensure YYYY-MM-DD
-        logsByDate[logDate] = logsByDate[logDate] || { completed: 0, total: 0 };
-        logsByDate[logDate].total += 1;
-        if (log.status) logsByDate[logDate].completed += 1;
-      });
+      if (habit.logs) {
+        habit.logs.forEach((log:any) => {
+          const logDate = log.date.split('T')[0]; // Ensure YYYY-MM-DD
+          logsByDate[logDate] = logsByDate[logDate] || { completed: 0, total: 0 };
+          logsByDate[logDate].total += 1;
+          if (log.status) logsByDate[logDate].completed += 1;
+        });
+      }
     });
 
     // Build week data
