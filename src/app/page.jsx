@@ -62,7 +62,7 @@ export default function Home() {
         title: "Error",
         description: "Failed to fetch habits",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
     } finally {
       setLoading(false);
@@ -75,7 +75,7 @@ export default function Home() {
         title: "Error",
         description: "Please enter a habit name",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
       return;
     }
@@ -85,7 +85,7 @@ export default function Home() {
       toast({
         title: "Success",
         description: "Habit created successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+            className: "border-gray-300",
       });
       setIsAddOpen(false);
       fetchHabits();
@@ -100,24 +100,33 @@ export default function Home() {
         title: "Error",
         description: error.response?.data?.error || "Failed to create habit",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
     }
   };
 
   const updateHabit = async (habitId, updates) => {
     try {
-      // Remove _id from updates to avoid immutable field error
       const { _id, ...updateData } = updates;
 
+      if(updates.goal.frequency>7 || updates.goal.frequency<1 ){
+        toast({
+          title: "Error",
+          description: "Goal is between 1-7",
+          variant: "destructive",
+          className: "bg-red-600",
+        });
+        return;
+      }
+
       const response = await axios.put(`/api/habits/${habitId}`, updateData);
-      await fetchHabits(); // Refresh all habits
+      await fetchHabits(); 
       setEditingHabit(null);
       setIsEditOpen(false);
       toast({
         title: "Success",
         description: "Habit updated successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+        className: "border-gray-300",
       });
     } catch (error) {
       console.error("Update error:", error);
@@ -125,7 +134,7 @@ export default function Home() {
         title: "Error",
         description: error.response?.data?.error || "Failed to update habit",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
     }
   };
@@ -136,7 +145,7 @@ export default function Home() {
       toast({
         title: "Success",
         description: "Habit deleted successfully",
-        className: "bg-gray-900 text-white border-gray-800",
+            className: "border-gray-300",
       });
       fetchHabits();
     } catch (error) {
@@ -144,7 +153,7 @@ export default function Home() {
         title: "Error",
         description: "Failed to delete habit",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
     }
   };
@@ -154,6 +163,20 @@ export default function Home() {
     if (!habit) return;
 
     try {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); 
+      const selectedDate = new Date(date);
+      selectedDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate > today) {
+        toast({
+          title: "Error",
+          description: "You cannot select a future date.",
+          variant: "destructive",
+          className: "bg-red-600",
+        });
+        return;
+      }
       const updatedLogs = [...(habit.logs || [])];
       const existingLog = updatedLogs.findIndex(log => log.date === date);
 
@@ -172,14 +195,14 @@ export default function Home() {
       toast({
         title: "Success",
         description: "Progress updated",
-        className: "bg-gray-900 text-white border-gray-800",
+            className: "border-gray-300",
       });
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to update progress",
         variant: "destructive",
-        className: "bg-red-900 text-white border-red-800",
+        className: "bg-red-600",
       });
     }
   };
@@ -468,7 +491,7 @@ export default function Home() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-600 hover:text-white hover:bg-gray-700"
+                  className="text-gray-600 hover:text-white hover:bg-gray-200"
                   onClick={() => {
                     setEditingHabit(habit);
                     setIsEditOpen(true);
