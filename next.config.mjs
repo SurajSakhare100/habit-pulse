@@ -1,9 +1,9 @@
-import { withSitemap } from 'next-sitemap';
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['lh3.googleusercontent.com'],
+    domains: ['lh3.googleusercontent.com']
   },
+  
 };
 
-export default withSitemap(nextConfig);
+export default nextConfig;
