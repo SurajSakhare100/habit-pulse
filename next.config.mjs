@@ -3,9 +3,8 @@ const { withSitemap } = require('next-sitemap');
 
 const nextConfig = {
   images: {
-    domains: ['lh3.googleusercontent.com']
+    domains: ['lh3.googleusercontent.com'],
   },
-  
 };
 
-export default nextConfig;
+module.exports = withSitemap(nextConfig);
