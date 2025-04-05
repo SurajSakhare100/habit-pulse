@@ -11,7 +11,7 @@ import { format, startOfWeek, eachDayOfInterval, addDays, startOfMonth, endOfMon
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import EmojiPicker, { Theme } from 'emoji-picker-react';
-import { ArrowLeft, ArrowRight, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flame, Pencil, Trash2, Trophy } from "lucide-react";
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -56,6 +56,25 @@ export default function HabitPage() {
       setLoading(false);
     }
   };
+  const [streak, setStreak] = useState({
+    current: 0,
+    max: 0,
+  });
+  
+  useEffect(() => {
+    const fetchStreak = async () => {
+      try {
+        const response = await axios.get(`/api/habits/${params.id}/streak`);
+        const { currentStreak, maxStreak } = response.data;
+        setStreak({ current: currentStreak, max: maxStreak });
+      } catch (error) {
+        console.error("Error fetching streak:", error);
+      }
+    };
+  
+    fetchStreak();
+  }, [params.id, habit?.logs]);
+  
 
   const getWeeklyProgress = () => {
     if (!habit) return { days: [], percentage: 0 };
@@ -74,7 +93,7 @@ export default function HabitPage() {
         completed: habit.logs.some(log => log.date === dateStr && log.status)
       };
     });
-    
+
 
     const completedDays = days.filter((d: { completed: boolean }) => d.completed).length;
     const percentage = Math.round((completedDays / habit.goal.frequency) * 100);
@@ -133,7 +152,6 @@ export default function HabitPage() {
       toast({
         title: "Success",
         description: "Progress updated successfully",
-        className: " border-gray-300",
       });
     } catch (error) {
       toast({
@@ -195,7 +213,6 @@ export default function HabitPage() {
       toast({
         title: "Success",
         description: "Habit deleted successfully",
-        className: "border-gray-800",
       });
       router.push('/');
     } catch (error) {
@@ -228,7 +245,7 @@ export default function HabitPage() {
         checked: habit?.logs.some(log => log.date === dateStr && log.status) || false,
       });
     }
-    
+
 
     return days;
   };
@@ -384,7 +401,8 @@ export default function HabitPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {/* Weekly Progress */}
-          <Card className="p-6 rounded-2xl h-60">
+          <div className="">
+          <Card className="p-6 rounded-2xl mb-2 ">
             <h2 className="text-xl font-semibold ">This Week</h2>
             <div className="flex items-center justify-between mb-4">
               <div className="text-gray-500">
@@ -415,29 +433,37 @@ export default function HabitPage() {
               ))}
             </div>
           </Card>
+          <div className="flex flex-wrap gap-4 mb-4 w-full">
+  {/* Current Streak */}
+  <div className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl bg-white shadow-md">
+    <Flame
+      className="h-20 w-20"
+      style={{
+        color: habit ? habit.color : 'rgb(156, 163, 175)',
+      }}
+    />
+      <h3 className="text-sm text-muted-foreground">Current Streak</h3>
+    <div className="font-bold text-center text-lg">{streak.current} day</div>
+  </div>
+
+  {/* Max Streak */}
+  <div className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl  bg-white shadow-md">
+    <Trophy
+      className="h-20 w-20  text-orange-500"
+      
+    />
+    <h3 className="text-sm text-muted-foreground mb-1">Max Streak</h3>
+    <div className="font-bold text-center text-lg">{streak.max} day</div>
+  </div>
+</div>
+
+
+          
+          </div>
+         
 
           {/* Monthly Progress */}
-          {/* <Card className="p-6 rounded-2xl">
-            <h2 className="text-xl font-semibold  mb-4">This Month</h2>
-            <div className="flex items-center justify-between mb-4">
-              <div className="text-gray-400">
-                {monthlyProgress.completed} of {monthlyProgress.total} days completed
-              </div>
-              <div className="text-2xl font-bold" style={{ color: habit.color }}>
-                {monthlyProgress.percentage}%
-              </div>
-            </div>
-            <div className="relative w-full h-24">
-              <LineChart
-                data={habit.logs.map(log => ({
-                  date: log.date,
-                  completion: log.status ? 1 : 0
-                }))}
-                color={habit.color}
-              />
-            </div>
-          </Card> */}
-          {/* Calendar */}
+
           <Card className="p-4 rounded-2xl">
             <div className="flex items-center  justify-between mb-4">
               <Button variant="ghost" size="sm" onClick={() => changeMonth(-1)}><ArrowLeft className="mr-2 h-8 w-8 text-2xl" /></Button>
@@ -477,6 +503,8 @@ export default function HabitPage() {
               ))}
             </div>
           </Card>
+         
+
         </div>
 
 
