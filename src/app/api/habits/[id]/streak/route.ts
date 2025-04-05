@@ -13,16 +13,25 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       return NextResponse.json({ error: "Habit not found" }, { status: 404 });
     }
 
-    const logs = (habit.logs || [])
-      .filter(log => log.status)
-      .map(log => {
-        const d = new Date(log.date);
-        d.setHours(0, 0, 0, 0);
-        return d.getTime(); // simplify to timestamp
-      })
-      .sort((a, b) => a - b); // ascending
+    interface Log {
+      date: string;
+      status: boolean;
+    }
 
-    const uniqueDates = Array.from(new Set(logs)); // remove any duplicates
+    interface HabitDocument {
+      logs?: Log[];
+    }
+
+    const logs = ((habit as HabitDocument).logs || [])
+      .filter((log: Log) => log.status)
+      .map((log: Log) => {
+      const d = new Date(log.date);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime(); // simplify to timestamp
+      })
+      .sort((a: number, b: number) => a - b); // ascending
+
+    const uniqueDates: number[] = Array.from(new Set(logs)); // remove any duplicates
 
     let maxStreak = 0;
     let currentStreak = 0;
