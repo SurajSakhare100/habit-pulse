@@ -59,7 +59,7 @@ export default function ProfilePage() {
   if (!profileData) return <div>Loading...</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container max-w-6xl mx-auto px-4 py-8">
       <Card className="p-6 mb-8">
         <div className="flex items-center gap-6">
           {profileData.user.image && (
