@@ -80,7 +80,7 @@ export default function HabitPage() {
   const getWeeklyProgress = () => {
     if (!habit) return { days: [], percentage: 0 };
     const today = new Date();
-    const startDate = startOfWeek(today, { weekStartsOn: 1 });
+    const startDate = startOfWeek(today);
     const weekDays = eachDayOfInterval({
       start: startDate,
       end: addDays(startDate, 6),

@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
 
     const today = new Date();
     const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay()+1);
+    startOfWeek.setDate(today.getDate() - today.getDay());
 
     // Aggregate logs by date
     const logsByDate: Record<string, DayData> = {};
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
 function getEmptyWeek(): WeekDay[] {
   const today = new Date();
   const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay());
+  startOfWeek.setDate(today.getDate() - today.getDay()+1);
   startOfWeek.setHours(0, 0, 0, 0);
 
   const days: WeekDay[] = [];

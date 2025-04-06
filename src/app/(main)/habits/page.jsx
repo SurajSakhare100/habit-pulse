@@ -210,24 +210,31 @@ export default function Home() {
   const getWeekDays = (logs = []) => {
     const today = new Date();
     const days = [];
+  
+    // Get Sunday of the current week
+    const startOfWeek = new Date(today);
+    const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+    startOfWeek.setDate(today.getDate() - dayOfWeek);
+  
     for (let i = 0; i < 7; i++) {
-
-      const date = new Date(today);
-      date.setDate(today.getDate() - today.getDay() + i+1);
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
+  
       const dateStr = date.toISOString().split('T')[0];
       days.push({
         date: dateStr,
-        day: date.toLocaleDateString('en-US', {  timeZone: 'Asia/Kolkata', 
-          weekday: 'short'}).toUpperCase(),
+        day: date.toLocaleDateString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          weekday: 'short',
+        }).toUpperCase(),
         dayNum: date.getDate(),
-        checked: logs.some(log => log.date === dateStr && log.status)
+        checked: logs.some(log => log.date === dateStr && log.status),
       });
     }
+  
     return days;
   };
-
-
-
+  
 
   const getTodayProgress = () => {
     const today = new Date().toISOString().split('T')[0];
