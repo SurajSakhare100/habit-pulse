@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { ArrowLeft, ArrowRight, Flame, Pencil, Trash2, Trophy } from "lucide-react";
+import DailyNote from "@/components/DailyNotes";
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -402,7 +403,7 @@ export default function HabitPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {/* Weekly Progress */}
           <div className="">
-          <Card className="p-6 rounded-2xl mb-2 ">
+          <Card className="p-6 rounded-2xl mb-4 ">
             <h2 className="text-xl font-semibold ">This Week</h2>
             <div className="flex items-center justify-between mb-4">
               <div className="text-gray-500">
@@ -433,9 +434,9 @@ export default function HabitPage() {
               ))}
             </div>
           </Card>
-          <div className="flex flex-wrap gap-4 mb-4 w-full">
+          <div className="flex flex-wrap gap-4  w-full">
   {/* Current Streak */}
-  <div className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl bg-white shadow-md">
+  <Card className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl shadow-md gap-2">
     <Flame
       className="h-20 w-20"
       style={{
@@ -443,18 +444,18 @@ export default function HabitPage() {
       }}
     />
       <h3 className="text-sm text-muted-foreground">Current Streak</h3>
-    <div className="font-bold text-center text-lg">{streak.current} day</div>
-  </div>
+    <p className="font-bold text-center text-lg">{streak.current} day</p>
+  </Card>
 
   {/* Max Streak */}
-  <div className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl  bg-white shadow-md">
+  <Card className="flex flex-col items-center justify-center flex-1 p-4 rounded-2xl  shadow-md gap-2">
     <Trophy
       className="h-20 w-20  text-orange-500"
       
     />
     <h3 className="text-sm text-muted-foreground mb-1">Max Streak</h3>
-    <div className="font-bold text-center text-lg">{streak.max} day</div>
-  </div>
+    <p className="font-bold text-center text-lg">{streak.max} day</p>
+  </Card>
 </div>
 
 
@@ -465,7 +466,7 @@ export default function HabitPage() {
           {/* Monthly Progress */}
 
           <Card className="p-4 rounded-2xl">
-            <div className="flex items-center  justify-between mb-4">
+            <div className="flex items-center  justify-between mb-2">
               <Button variant="ghost" size="sm" onClick={() => changeMonth(-1)}><ArrowLeft className="mr-2 h-8 w-8 text-2xl" /></Button>
               <h2 className="text-lg font-semibold">
                 {MONTHS[currentDate.getMonth()]} {currentDate.getFullYear()}
@@ -503,9 +504,14 @@ export default function HabitPage() {
               ))}
             </div>
           </Card>
+
+          
          
 
         </div>
+        <Card className="p-4 rounded-2xl mt-4"> 
+            <DailyNote habitId={Array.isArray(params.id) ? params.id[0] : params.id}/>
+            </Card>
 
 
       </div>
