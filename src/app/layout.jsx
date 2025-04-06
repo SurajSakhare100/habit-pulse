@@ -3,6 +3,7 @@ import { AuthProvider } from "@/components/auth-provider";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" }); 
 export const metadata = {
@@ -71,14 +72,18 @@ export default function RootLayout({ children }) {
           <Analytics />
           <Toaster />
       </AuthProvider>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments)}
-  gtag('js', new Date());
-
-  gtag('config', 'G-CLCJ43DW95');
-</script>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"
+        strategy="afterInteractive"
+      />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-CLCJ43DW95');
+        `}
+      </Script>
       </body>
     </html>
   );
