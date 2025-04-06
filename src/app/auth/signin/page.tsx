@@ -2,18 +2,20 @@
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function SignIn() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950">
-      <Card className="p-8 max-w-sm w-full bg-gray-900 border-gray-800">
+    <div className="min-h-screen flex items-center justify-center ">
+      <Card className="p-8 max-w-sm w-full  ">
         <div className="text-center mb-2">
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-gray-400">Sign in to track your daily habits</p>
+          <h1 className="text-3xl font-bold  mb-2">Welcome Back</h1>
+          <p className="">Sign in to track your daily habits</p>
         </div>
 
         <Button
-          className="w-full flex items-center justify-center gap-2 bg-white text-gray-900 hover:bg-gray-100"
+        variant="outline"
+          className="w-full"
           onClick={() => signIn("google", { callbackUrl: "/" })}
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" xmlns="http://www.w3.org/2000/svg">
@@ -40,6 +42,9 @@ export default function SignIn() {
         {/* <div className="mt-6 text-center text-sm text-gray-500">
           By signing in, you agree to our Terms of Service and Privacy Policy
         </div> */}
+        <div className=" text-center text-sm text-gray-500">
+          back to <Link href="/">Home</Link>
+        </div>
       </Card>
     </div>
   );

@@ -18,7 +18,7 @@ export default function FeedbackForm({ onFeedbackSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-4 border rounded-lg shadow-sm bg-white">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 p-4 border rounded-lg shadow-sm ">
       <Textarea
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}

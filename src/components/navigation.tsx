@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
+import Image from "next/image";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -42,10 +43,22 @@ export function Navigation() {
     <nav className="border-b px-20">
       <div className="flex h-16 items-center px-4">
         <div className="flex items-center space-x-4">
+           <div className="flex flex-1 items-center">
+                      <Link href="/">
+                      <Image
+                        src={require("@/public/favicon.ico")}
+                        className="rounded-full"
+                        alt="Logo"
+                        width={30}
+                        height={30}
+                      />
+                      </Link>
+                    </div>
+
           <Link
-            href="/"
+            href="/habits"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/" ? "text-foreground" : "text-foreground/60"
+              pathname === "/habits" ? "text-foreground" : "text-foreground/60"
             }`}
           >
             Habits
