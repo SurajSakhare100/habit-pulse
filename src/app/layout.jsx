@@ -71,6 +71,14 @@ export default function RootLayout({ children }) {
           <Analytics />
           <Toaster />
       </AuthProvider>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)}
+  gtag('js', new Date());
+
+  gtag('config', 'G-CLCJ43DW95');
+</script>
       </body>
     </html>
   );
