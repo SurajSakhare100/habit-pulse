@@ -7,9 +7,9 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" }); 
 export const metadata = {
-  title: "Habit Pulse",
-  description: "Track your daily habits and improve your lifestyle.",
-  icons: {
+  title: "Habit Tracker App - Build Daily Habits with Habit Pulse",
+  description: "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
+   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-32x32.png",
     apple: "/apple-touch-icon.png",
@@ -33,6 +33,8 @@ export default function RootLayout({ children }) {
         <meta property="og:image" content="/images/og-image.jpg" />
         <meta property="og:url" content="https://myhabitpulse.vercel.app/" />
         <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://myhabitpulse.vercel.app/" />
+
         
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
