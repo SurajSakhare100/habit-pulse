@@ -1,10 +1,8 @@
 import { Inter } from 'next/font/google';
-import { AuthProvider } from '@/components/auth-provider';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
-import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -33,7 +31,7 @@ export default function RootLayout({ children }) {
   {/* Open Graph Meta Tags */}
   <meta property="og:title" content="Habit Pulse - Track Your Habits" />
   <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
-  <meta property="og:image" content="/images/og-image.jpg" />
+  <meta property="og:image" content="/favicon.ico" />
   <meta property="og:url" content="https://habitpulse.xyz/" />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="https://habitpulse.xyz/" />
@@ -42,7 +40,7 @@ export default function RootLayout({ children }) {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Habit Pulse - Track Your Habits" />
   <meta name="twitter:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
-  <meta name="twitter:image" content="/images/og-image.jpg" />
+  <meta name="twitter:image" content="/favicon.ico" />
 
   {/* Structured Data (JSON-LD) */}
   <script
@@ -54,7 +52,7 @@ export default function RootLayout({ children }) {
         name: 'Habit Pulse',
         url: 'https://habitpulse.xyz/',
         description: 'Track and improve your habits with Habit Pulse',
-        image: 'https://habitpulse.xyz/images/og-image.jpg',
+        image: 'https://habitpulse.xyz/favicon.ico',
         applicationCategory: 'Lifestyle',
         operatingSystem: 'Web',
       }),
@@ -73,13 +71,9 @@ export default function RootLayout({ children }) {
 
 
       <body className={inter.className}>
-        <AuthProvider>
-          <Suspense>
-            <main className="min-h-screen bg-background">{children}</main>
+            <main className="min-h-screen">{children}</main>
             <Analytics />
             <Toaster />
-          </Suspense>
-        </AuthProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"
           strategy="afterInteractive"

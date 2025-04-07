@@ -7,16 +7,18 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ token }) => !!token, // Check if the token exists (user is authenticated)
     },
     pages: {
-      signIn: "/auth/signin",
+      signIn: "/auth/signin", // Redirect to sign-in page if not authorized
     },
   }
 );
 
 export const config = {
   matcher: [
-    "/((?!api/auth|auth|_next/static|_next/image|favicon.ico|sitemap.xml|$).*)", // Excluding sitemap.xml here
+    "/habits/:path*",    // Matches anything under /habits/*
+    "/profile",          // Matches /profile
+    "/feedback",         // Matches /feedback
   ],
 };

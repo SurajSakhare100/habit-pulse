@@ -43,14 +43,12 @@ export function Navigation() {
     <nav className="border-b px-20">
       <div className="flex h-16 items-center px-4">
         <div className="flex items-center space-x-4">
-           <div className="flex flex-1 items-center">
+           <div className="flex flex-1 items-center cursor-pointer">
                       <Link href="/">
                       <Image
                         src={require("@/public/favicon.ico")}
-                        className="rounded-full"
+                        className="h-8 w-8 rounded-full"
                         alt="Logo"
-                        width={30}
-                        height={30}
                       />
                       </Link>
                     </div>

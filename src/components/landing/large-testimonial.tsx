@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import TestimonialImg from "@/public/images/large-testimonial.jpg";
+import TestimonialImg from "@/public/images/avatar-01.jpg";
 
 
 export default function LargeTestimonial() {
@@ -36,10 +36,10 @@ export default function LargeTestimonial() {
               <em className="italic text-gray-500">build real momentum</em>, ”
             </p>
             <div className="text-sm font-medium text-gray-500">
-              <span className="">Mary Sullivan</span>{" "}
+              <span className="">Nitin Rathe</span>{" "}
               <span className="">/</span>{" "}
               <a className="text-blue-500" href="#0">
-              Product Designer
+             Full Stack Developer
               </a>
             </div>
           </div>
