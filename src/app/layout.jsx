@@ -4,8 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
-import { Session } from 'inspector/promises';
-import { SessionProvider } from 'next-auth/react';
+import { Suspense } from 'react';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -27,19 +26,13 @@ export default function RootLayout({ children }) {
         <meta name="google-site-verification" content="b7yDmUftzFJzjwP96Jv0AQ6E3alSjSkx7felqcdVwqs" />
 
         {/* SEO Meta Tags */}
-        <meta
-          name="description"
-          content="Track your daily habits and improve your lifestyle with Habit Pulse"
-        />
+        <meta name="description" content="Track your daily habits and improve your lifestyle with Habit Pulse" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content="Habit Pulse - Track Your Habits" />
-        <meta
-          property="og:description"
-          content="Track your daily habits and improve your lifestyle with Habit Pulse."
-        />
+        <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
         <meta property="og:image" content="/images/og-image.jpg" />
         <meta property="og:url" content="https://habitpulse.xyz/" />
         <meta property="og:type" content="website" />
@@ -48,10 +41,7 @@ export default function RootLayout({ children }) {
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Habit Pulse - Track Your Habits" />
-        <meta
-          name="twitter:description"
-          content="Track your daily habits and improve your lifestyle with Habit Pulse."
-        />
+        <meta name="twitter:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
         <meta name="twitter:image" content="/images/og-image.jpg" />
 
         {/* Structured Data (JSON-LD) */}
@@ -79,11 +69,11 @@ export default function RootLayout({ children }) {
 
       <body className={inter.className}>
         <AuthProvider>
-          <SessionProvider>
-          <main className="min-h-screen bg-background">{children}</main>
-          <Analytics />
-          <Toaster />
-          </SessionProvider>
+          <Suspense>
+            <main className="min-h-screen bg-background">{children}</main>
+            <Analytics />
+            <Toaster />
+          </Suspense>
         </AuthProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"
