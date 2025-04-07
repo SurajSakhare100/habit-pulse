@@ -2,21 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home Page -->
   <url>
-    <loc>https://myhabitpulse.vercel.app/</loc>
+    <loc>https://habitpulse.xyz/</loc>
     <lastmod>2025-03-31</lastmod> <!-- Update with the actual last modified date -->
     <priority>1.0</priority>
   </url>
 
   <!-- Profile Page -->
   <url>
-    <loc>https://myhabitpulse.vercel.app/profile</loc>
+    <loc>https://habitpulse.xyz/profile</loc>
     <lastmod>2025-03-31</lastmod>
     <priority>0.8</priority>
   </url>
 
   <!-- Habits Page -->
   <url>
-    <loc>https://myhabitpulse.vercel.app/habits</loc>
+    <loc>https://habitpulse.xyz/habits</loc>
     <lastmod>2025-03-31</lastmod>
     <priority>0.8</priority>
   </url>
