@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Heart, Pencil, Trash2, Save, X } from 'lucide-react';
+import { useSession } from "next-auth/react"; // Import useSession hook to get logged-in user info
 
 export default function FeedbackItem({ feedback, onUpvote, onEdit, onDelete }) {
+  const { data: session } = useSession(); // Get the current session data
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(feedback.content);
 
   const handleEdit = () => {
-    onEdit(feedback._id, { content: editedContent.trim() });
+    onEdit( { content: editedContent.trim() });
     setIsEditing(false);
   };
 
@@ -16,6 +18,8 @@ export default function FeedbackItem({ feedback, onUpvote, onEdit, onDelete }) {
     setIsEditing(false);
     setEditedContent(feedback.content);
   };
+
+  const isOwner = feedback.userId === session?.user.id; // Check if the current user is the owner
 
   return (
     <div className="relative p-4 mb-4 border rounded-lg shadow-sm bg-white">
@@ -71,24 +75,26 @@ export default function FeedbackItem({ feedback, onUpvote, onEdit, onDelete }) {
             </Button>
           </>
         ) : (
-          <>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsEditing(true)}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <Pencil className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onDelete(feedback._id)}
-              className="text-red-500 hover:text-red-700"
-            >
-              <Trash2 className="w-4 h-4" />
-            </Button>
-          </>
+          isOwner && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsEditing(true)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Pencil className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => onDelete(feedback._id)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </>
+          )
         )}
       </div>
     </div>
