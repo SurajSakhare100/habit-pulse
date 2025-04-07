@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import { Navigation } from "@/components/navigation";
+import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"], display: "swap" }); 
 export const metadata = {
   title: "Habit Pulse",
@@ -14,12 +15,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
           
-          <>
+          <Suspense fallback={<div>Loading...</div>}>
           <Navigation />
           <main className="min-h-screen bg-background">
             {children}
           </main>
-          </>
+          </Suspense>
       
   );
 }
