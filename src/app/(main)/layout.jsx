@@ -7,7 +7,6 @@ export default function RootLayout({ children }) {
           <>
             <AuthProvider>
             <Suspense>
-          <Navigation />
           <main className="min-h-screen bg-background">
             {children}
           </main>

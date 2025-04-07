@@ -40,14 +40,14 @@ export default function SignUp() {
   };
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <Card className="p-8 max-w-sm w-full space-y-4">
+      <Card className="p-8 max-w-sm w-full space-y-2">
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-2">Create Account</h1>
           <p>Start tracking your daily habits today</p>
         </div>
 
         {/* Name Input */}
-        <div className="space-y-2">
+        <div className="">
           <label htmlFor="name" className="block text-sm font-medium ">
             Full Name
           </label>
@@ -95,13 +95,13 @@ export default function SignUp() {
 
         {/* Submit Button */}
         <Button
-          className="w-full py-3 mt-4 font-semibold "
+          className="w-full  mt-4 font-semibold "
           onClick={handleSubmit}
           disabled={loading}
         >
           {loading ? 'Signing up...' : 'Sign Up'}
         </Button>
-        <div className="relative flex justify-center text-xs uppercase">
+        <div className=" flex justify-center text-xs uppercase">
             <span className=" px-4 text-muted-foreground">Or continue with</span>
           </div>
 
