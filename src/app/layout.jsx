@@ -4,6 +4,8 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import Script from 'next/script';
+import { Session } from 'inspector/promises';
+import { SessionProvider } from 'next-auth/react';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -77,9 +79,11 @@ export default function RootLayout({ children }) {
 
       <body className={inter.className}>
         <AuthProvider>
+          <SessionProvider>
           <main className="min-h-screen bg-background">{children}</main>
           <Analytics />
           <Toaster />
+          </SessionProvider>
         </AuthProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-CLCJ43DW95"
