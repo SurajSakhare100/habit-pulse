@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
 function getEmptyWeek(): WeekDay[] {
   const today = new Date();
   const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - today.getDay()+1);
+  startOfWeek.setDate(today.getDate() - today.getDay());
   startOfWeek.setHours(0, 0, 0, 0);
 
   const days: WeekDay[] = [];
@@ -95,7 +95,8 @@ function getEmptyWeek(): WeekDay[] {
     const dateStr = date.toISOString().split('T')[0];
     days.push({
       date: dateStr,
-      day: date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
+      day: date.toLocaleDateString('en-US', {  timeZone: 'Asia/Kolkata', 
+        weekday: 'short'}).toUpperCase(),
       dayNum: date.getDate(),
       completionRate: 0,
     });

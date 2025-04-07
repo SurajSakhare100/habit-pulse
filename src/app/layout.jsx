@@ -31,9 +31,9 @@ export default function RootLayout({ children }) {
         <meta property="og:title" content="Habit Pulse - Track Your Habits" />
         <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
         <meta property="og:image" content="/images/og-image.jpg" />
-        <meta property="og:url" content="https://myhabitpulse.vercel.app/" />
+        <meta property="og:url" content="https://habitpulse.xyz/" />
         <meta property="og:type" content="website" />
-        <link rel="canonical" href="https://myhabitpulse.vercel.app/" />
+        <link rel="canonical" href="https://habitpulse.xyz/" />
 
         
         {/* Twitter Card Meta Tags */}
@@ -50,9 +50,9 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "WebApplication",
               "name": "Habit Pulse",
-              "url": "https://myhabitpulse.vercel.app/",
+              "url": "https://habitpulse.xyz/",
               "description": "Track and improve your habits with Habit Pulse",
-              "image": "https://myhabitpulse.vercel.app/images/og-image.jpg",
+              "image": "https://habitpulse.xyz/images/og-image.jpg",
               "applicationCategory": "Lifestyle",
               "operatingSystem": "Web",
             }),
