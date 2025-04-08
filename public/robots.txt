@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://habitpulse.xyz
+
+# Sitemaps
+Sitemap: https://habitpulse.xyz/sitemap.xml
