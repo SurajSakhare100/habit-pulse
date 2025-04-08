@@ -1,4 +1,4 @@
-// src/app/layout.tsx or src/app/layout.js
+// src/app/layout.tsx
 
 import { Inter } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
         {/* Open Graph */}
         <meta property="og:title" content="Habit Pulse - Track Your Habits" />
         <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
-        <meta property="og:image" content="/favion.ico" />
+        <meta property="og:image" content="https://habitpulse.xyz/logo.png" /> {/* Use a real logo image, not favicon */}
         <meta property="og:url" content="https://habitpulse.xyz/" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://habitpulse.xyz/" />
@@ -38,21 +38,27 @@ export default function RootLayout({ children }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Habit Pulse - Track Your Habits" />
         <meta name="twitter:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
-        <meta name="twitter:image" content="/favicon.ico" />
+        <meta name="twitter:image" content="https://habitpulse.xyz/logo.png" />
 
         {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebApplication',
-              name: 'Habit Pulse',
-              url: 'https://habitpulse.xyz/',
-              description: 'Track and improve your habits with Habit Pulse',
-              image: 'https://habitpulse.xyz/favicon.ico',
-              applicationCategory: 'Lifestyle',
-              operatingSystem: 'Web',
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Habit Pulse",
+              url: "https://habitpulse.xyz/",
+              description: "Track and improve your habits with Habit Pulse",
+              image: "https://habitpulse.xyz/logo.png",
+              applicationCategory: "Lifestyle",
+              operatingSystem: "Web",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+                availability: "https://schema.org/InStock",
+              }
             }),
           }}
         />
