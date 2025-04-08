@@ -9,7 +9,7 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
 export const metadata = {
-  title: 'Habit Tracker App - Build Daily Habits with Habit Pulse',
+  title: 'Habit Pulse – Free Habit Tracker App',
   description: 'Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.',
   icons: {
     icon: '/favicon.ico',
@@ -49,7 +49,7 @@ export default function RootLayout({ children }) {
               "@type": "WebApplication",
               name: "Habit Pulse",
               url: "https://habitpulse.xyz/",
-              description: "Track and improve your habits with Habit Pulse",
+              description: "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
               image: "https://habitpulse.xyz/logo.png",
               applicationCategory: "Lifestyle",
               operatingSystem: "Web",
