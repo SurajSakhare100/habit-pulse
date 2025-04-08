@@ -2,12 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 <url><loc>https://habitpulse.xyz/legal/privacy-policy</loc><lastmod>2025-04-08T05:06:04.040Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 <url><loc>https://habitpulse.xyz/legal/terms-of-service</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://habitpulse.xyz/blogs</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 <url><loc>https://habitpulse.xyz/feedback</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 <url><loc>https://habitpulse.xyz/profile</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://habitpulse.xyz/auth/error</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://habitpulse.xyz/auth/signin</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://habitpulse.xyz/auth/signup</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://habitpulse.xyz/auth/verify</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 <url><loc>https://habitpulse.xyz/habits</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 <url><loc>https://habitpulse.xyz</loc><lastmod>2025-04-08T05:06:04.041Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
