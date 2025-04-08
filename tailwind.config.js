@@ -1,14 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // Enable dark mode using the 'class' strategy, matching the CSS's use of '.dark'
   darkMode: 'class',
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./app/**/*.{js,ts,jsx,tsx}", // If using the App Router (Next.js 13+)
+    "./app/**/*.{js,ts,jsx,tsx}",
   ],
-
   theme: {
     extend: {
       colors: {
@@ -33,13 +31,10 @@ module.exports = {
         input: 'var(--input)',
         ring: 'var(--ring)',
       },
-      // Set the default border radius to use the --radius variable
       borderRadius: {
         DEFAULT: 'var(--radius)',
       },
     },
   },
-
-  // No additional plugins are specified, so keep it empty
-  plugins: [],
-}
+  plugins: [require('@tailwindcss/typography')],
+};

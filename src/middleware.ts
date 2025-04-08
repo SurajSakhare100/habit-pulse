@@ -17,8 +17,8 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    "/habits/:path*",    // Matches anything under /habits/*
-    "/profile",          // Matches /profile
-    "/feedback",         // Matches /feedback
+    "/habits/:path*",    
+    "/profile",         
+    "/feedback",        
   ],
 };

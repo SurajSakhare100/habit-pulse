@@ -25,7 +25,6 @@ export default function RootLayout({ children }) {
         <meta name="google-site-verification" content="b7yDmUftzFJzjwP96Jv0AQ6E3alSjSkx7felqcdVwqs" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
         {/* Open Graph */}
         <meta property="og:title" content="Habit Pulse - Track Your Habits" />
         <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
@@ -33,13 +32,11 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content="https://habitpulse.xyz/" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://habitpulse.xyz/" />
-
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Habit Pulse - Track Your Habits" />
         <meta name="twitter:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
         <meta name="twitter:image" content="https://habitpulse.xyz/logo.png" />
-
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -62,7 +59,6 @@ export default function RootLayout({ children }) {
             }),
           }}
         />
-
         {/* Favicons */}
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
