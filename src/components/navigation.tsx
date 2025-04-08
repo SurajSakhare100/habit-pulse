@@ -46,7 +46,7 @@ export function Navigation() {
            <div className="flex flex-1 items-center cursor-pointer">
                       <Link href="/">
                       <Image
-                        src={require("@/public/favicon.ico")}
+                        src={require("../../public/favicon.ico")}
                         className="h-8 w-8 rounded-full"
                         alt="Logo"
                       />

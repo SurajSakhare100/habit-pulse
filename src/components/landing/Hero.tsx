@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import Avatar01 from "@/public/images/avatar-01.jpg";
-import Avatar02 from "@/public/images/avatar-02.jpg";
-import Avatar03 from "@/public/images/avatar-03.jpg";
-import Avatar04 from "@/public/images/avatar-04.jpg";
-import Avatar05 from "@/public/images/avatar-05.jpg";
-import Avatar06 from "@/public/images/avatar-06.jpg";
+import Avatar01 from "../../../public/images/avatar-01.jpg";
+import Avatar02 from "../../../public/images/avatar-02.jpg";
+import Avatar03 from "../../../public/images/avatar-03.jpg";
+import Avatar04 from "../../../public/images/avatar-04.jpg";
+import Avatar05 from "../../../public/images/avatar-05.jpg";
+import Avatar06 from "../../../public/images/avatar-06.jpg";
 import { Button } from "../ui/button";
 
 export default function HeroHome() {
@@ -57,7 +57,7 @@ export default function HeroHome() {
           <div className="mx-auto max-w-3xl">
             <div className=" aspect-video rounded-2xl  px-5  shadow-2xl">
             <Image
-                                    src={require("@/public/myhabits.png")}
+                                    src={require("../../../public/myhabits.png")}
                                     alt="Logo"
                                   />
             </div>

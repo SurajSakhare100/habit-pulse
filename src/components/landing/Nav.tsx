@@ -32,7 +32,7 @@ export default function Header() {
         <div className="flex flex-1 items-center cursor-pointer">
                       <Link href="/" className="flex items-center space-x-2">
                       <Image
-                        src={require("@/public/favicon.ico")}
+                        src={require("../../../public/favicon.ico")}
                         className="h-8 w-8 rounded-full"
                         alt="Logo"
                       />
