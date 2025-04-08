@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import TestimonialImg from "../../../public/images/large-testimonial.jpg";
+import Avatar01 from "../../../public/images/avatar-01.jpg";
 
 
 export default function LargeTestimonial() {
@@ -25,7 +25,7 @@ export default function LargeTestimonial() {
               </svg>
               <Image
                 className="rounded-full"
-                src={TestimonialImg}
+                src={Avatar01}
                 width={48}
                 height={48}
                 alt="Large testimonial"

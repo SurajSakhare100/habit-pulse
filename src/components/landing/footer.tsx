@@ -19,8 +19,18 @@ export default function Footer({ border = false }: { border?: boolean }) {
           <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
             <h3 className="text-sm font-medium">Partner Projects</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="https://readspark.vercel.app/">ReadSpark</Link></li>
-              <li><Link href="https://relinkk.vercel.app/">Relinkk</Link></li>
+              <li><Link href="https://readspark.vercel.app/" target='_blank'>ReadSpark</Link></li>
+              <li><Link href="https://relinkk.vercel.app/" target='_blank'>Relinkk</Link></li>
+            </ul>
+          </div>
+
+          {/* Blog Links */}
+          <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
+            <h3 className="text-sm font-medium">Blog Posts</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/blogs/best-habit-tracking-apps">Best Habit Tracking Apps in 2025</Link></li>
+              <li><Link href="/blogs/how-to-build-good-habits">Build Habits That Stick</Link></li>
+              <li><Link href="/blogs/breaking-bad-habits-strategies">Breaking Bad Habits</Link></li>
             </ul>
           </div>
 
@@ -46,7 +56,7 @@ export default function Footer({ border = false }: { border?: boolean }) {
               </li>
               <li>
                 <Link href="https://www.instagram.com/myhabitpulse/" aria-label="Instagram">
-                 <Instagram className="h-5 w-5 mt-1.5" />
+                  <Instagram className="h-5 w-5 mt-1.5" />
                 </Link>
               </li>
             </ul>
