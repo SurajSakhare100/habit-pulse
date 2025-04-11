@@ -15,12 +15,15 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
+  useState,
+  type ComponentProps,
 } from "react";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 type Api = {
   fire: (options?: ConfettiOptions) => void;
+  reset: () => void;
 };
 
 type Props = React.ComponentPropsWithRef<"canvas"> & {
@@ -109,41 +112,56 @@ ConfettiComponent.displayName = "Confetti";
 // Export as Confetti
 export const Confetti = ConfettiComponent;
 
-interface ConfettiButtonProps extends ButtonProps {
-  options?: ConfettiOptions &
-    ConfettiGlobalOptions & { canvas?: HTMLCanvasElement };
-  children?: React.ReactNode;
-}
-
-const ConfettiButtonComponent = ({
-  options,
-  children,
-  ...props
-}: ConfettiButtonProps) => {
-  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    try {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const x = rect.left + rect.width / 2;
-      const y = rect.top + rect.height / 2;
-      await confetti({
-        ...options,
-        origin: {
-          x: x / window.innerWidth,
-          y: y / window.innerHeight,
-        },
-      });
-    } catch (error) {
-      console.error("Confetti button error:", error);
-    }
-  };
-
-  return (
-    <Button onClick={handleClick} {...props}>
-      {children}
-    </Button>
-  );
+export type ConfettiButtonProps = ComponentProps<typeof Button> & {
+  onFire?: (options?: ConfettiOptions) => void;
 };
 
-ConfettiButtonComponent.displayName = "ConfettiButton";
+export const ConfettiButton = ({
+  onClick,
+  onFire,
+  ...props
+}: ConfettiButtonProps) => {
+  const [confetti, setConfetti] = useState<Api | null>(null);
 
-export const ConfettiButton = ConfettiButtonComponent;
+  useEffect(() => {
+    import("canvas-confetti").then((confetti) => {
+      const canvas = document.createElement("canvas");
+      canvas.classList.add("fixed", "inset-0", "-z-10");
+      document.body.appendChild(canvas);
+
+      const myConfetti = confetti.create(canvas, {
+        resize: true,
+        useWorker: true,
+      });
+
+      const api: Api = {
+        fire: (options) => {
+          myConfetti({
+            ...options,
+            origin: { y: 0.7 },
+          });
+        },
+        reset: () => {
+          canvas.remove();
+        },
+      };
+
+      setConfetti(api);
+    });
+
+    return () => {
+      confetti?.reset();
+    };
+  }, []);
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(e);
+      onFire?.();
+      confetti?.fire();
+    },
+    [onClick, onFire, confetti]
+  );
+
+  return <Button {...props} onClick={handleClick} />;
+};
