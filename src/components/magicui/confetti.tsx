@@ -77,11 +77,18 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
     [options],
   );
 
+  const reset = useCallback(() => {
+    if (instanceRef.current) {
+      instanceRef.current.reset();
+    }
+  }, []);
+
   const api = useMemo(
     () => ({
       fire,
+      reset
     }),
-    [fire],
+    [fire, reset],
   );
 
   useImperativeHandle(ref, () => api, [api]);
