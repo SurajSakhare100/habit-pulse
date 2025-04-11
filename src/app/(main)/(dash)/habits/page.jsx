@@ -10,6 +10,7 @@ import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { useToast } from "@/components/ui/use-toast";
 import { Pencil, Trash2 } from 'lucide-react';
 import { getWeekCompletion } from "@/lib/getWeekCompletion";
+import { useSession } from "next-auth/react";
 const PRESET_COLORS = [
   "#66BB6A", // Soft Green (replacing #22c55e)
   "#42A5F5", // Soft Blue (replacing #3b82f6)
@@ -22,6 +23,7 @@ const PRESET_COLORS = [
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
+  const { data: session } = useSession();
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingHabit, setEditingHabit] = useState(null);
@@ -80,12 +82,32 @@ export default function Home() {
       return;
     }
 
+    // Check if non-pro user has reached limit
+    if (!session?.user?.isPro && habits.length >= 3) {
+      toast({
+        title: "Upgrade Required",
+        description: "Free users can only create up to 3 habits. Upgrade to Pro for unlimited habits!",
+        variant: "default",
+        action: (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.push('/pricing')}
+            className="bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Upgrade to Pro
+          </Button>
+        ),
+      });
+      return;
+    }
+
     try {
       await axios.post("/api/habits", newHabit);
       toast({
         title: "Success",
         description: "Habit created successfully",
-            className: "border-gray-300",
+        className: "border-gray-300",
       });
       setIsAddOpen(false);
       fetchHabits();
@@ -263,7 +285,31 @@ export default function Home() {
           <h1 className="text-2xl font-bold">My Habits</h1>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
             <DialogTrigger asChild>
-              <Button onClick={() => setIsAddOpen(true)}>Add Habit</Button>
+              <Button 
+                onClick={() => {
+                  if (!session?.user?.isPro && habits.length >= 3) {
+                    toast({
+                      title: "Upgrade Required",
+                      description: "Free users can only create up to 3 habits. Upgrade to Pro for unlimited habits!",
+                      variant: "default",
+                      action: (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => router.push('/pricing')}
+                          className="bg-blue-500 text-white hover:bg-blue-600"
+                        >
+                          Upgrade to Pro
+                        </Button>
+                      ),
+                    });
+                    return;
+                  }
+                  setIsAddOpen(true);
+                }}
+              >
+                Add Habit
+              </Button>
             </DialogTrigger>
             <DialogContent className="max-w-[300px] ">
               <DialogHeader>
@@ -469,7 +515,6 @@ export default function Home() {
         </div>
 
       </div>
-
       <div className="space-y-6">
         {habits.map((habit) => (
           <div
@@ -481,11 +526,11 @@ export default function Home() {
                 className="flex items-center gap-3 cursor-pointer"
                 onClick={() => router.push(`/habits/${habit._id}`)}
               >
-                <div className="text-2xl w-8 h-8 flex items-center justify-center">
+                <div className="text-2xl w-8 h-8 flex items-center justify-center rounded-2xl ">
                   {habit.emoji || "✨"}
                 </div>
                 <div>
-                  <h2 className="text-xl font-semibold ">
+                  <h2 className="text-xl font-semibold  ">
                     {habit.habitName}
                   </h2>
                   <p className="text-gray-600">
@@ -509,7 +554,7 @@ export default function Home() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-red-400 hover:text-red-300 hover:bg-red-900/50"
+                  className="text-red-400 "
                   onClick={() => deleteHabit(habit._id)}
                 >
                   <Trash2 className="h-4 w-4" />

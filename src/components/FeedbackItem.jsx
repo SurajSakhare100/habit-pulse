@@ -1,102 +1,123 @@
 import { useState } from 'react';
 import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { Heart, Pencil, Trash2, Save, X } from 'lucide-react';
+import { ChevronUp, Pencil, Trash2, Save, X } from 'lucide-react';
 import { useSession } from "next-auth/react"; // Import useSession hook to get logged-in user info
 
 export default function FeedbackItem({ feedback, onUpvote, onEdit, onDelete }) {
   const { data: session } = useSession(); // Get the current session data
   const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState(feedback.content);
+  const [editedTitle, setEditedTitle] = useState(feedback.title);
+  const [editedDescription, setEditedDescription] = useState(feedback.description);
 
   const handleEdit = () => {
-    onEdit( { content: editedContent.trim() });
+    onEdit(feedback._id, { 
+      title: editedTitle.trim(),
+      description: editedDescription.trim()
+    });
     setIsEditing(false);
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
-    setEditedContent(feedback.content);
+    setEditedTitle(feedback.title);
+    setEditedDescription(feedback.description);
   };
 
   const isOwner = feedback.userId === session?.user.id; // Check if the current user is the owner
 
   return (
-    <div className="relative p-4 mb-4 border rounded-lg shadow-sm bg-white">
-      {/* Row: Content + Upvote button aligned right center */}
-      <div className="flex justify-between items-center gap-4">
-        <div className="flex-1">
+    <div className="p-4 mb-4 border border-opacity-50 rounded-2xl shadow-xl ">
+      <div className="flex justify-between items-start gap-4">
+        <div className="flex-1 space-y-2">
           {isEditing ? (
-            <Input
-              type="text"
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-              autoFocus
-              className="w-full"
-            />
+            <>
+              <Input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+                placeholder="Title"
+                autoFocus
+                className="w-full"
+              />
+              <Textarea
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+                placeholder="Description"
+                className="w-full min-h-[80px]"
+              />
+            </>
           ) : (
-            <p className="text-gray-800">{feedback.content}</p>
+            <>
+              <h3 className="font-medium text-lg">{feedback.title}</h3>
+              <p className="">{feedback.description}</p>
+            </>
           )}
         </div>
 
-        {/* Upvote button aligned right center */}
-        <div className="flex-shrink-0 h-full self-center items-center justify-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onUpvote(feedback._id)}
-            className="flex items-center gap-1 text-pink-600 hover:text-pink-800"
-            disabled={isEditing}
-          >
-            <Heart className="w-4 h-4" /> {feedback.upvotes}
-          </Button>
+        <div className="flex-shrink-0">
+          <div className="flex flex-col items-center border rounded-2xl p-2">
+            <button
+              onClick={() => onUpvote(feedback._id)}
+              disabled={isEditing}
+              className="flex flex-col items-center p-2 rounded-lg  transition-colors"
+            >
+              <ChevronUp className="w-4 h-4 " />
+              <span className="text-sm font-medium">{feedback.upvotes}</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Row: Edit/Delete/Save/Cancel Buttons below content */}
-      <div className="mt-2 flex gap-2">
-        {isEditing ? (
-          <>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleEdit}
-              className="text-green-600 hover:text-green-800"
-            >
-              <Save className="w-4 h-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleCancelEdit}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </>
-        ) : (
-          isOwner && (
+      {isOwner && (
+        <div className="mt-4 flex gap-2 justify-end">
+          {isEditing ? (
             <>
               <Button
                 variant="ghost"
-                size="icon"
-                onClick={() => setIsEditing(true)}
-                className="text-gray-500 hover:text-gray-700"
+                size="sm"
+                onClick={handleEdit}
+                className="text-green-600 hover:text-green-800"
+                disabled={!editedTitle.trim() || !editedDescription.trim()}
               >
-                <Pencil className="w-4 h-4" />
+                <Save className="w-4 h-4 mr-1" />
+                Save
               </Button>
               <Button
                 variant="ghost"
-                size="icon"
+                size="sm"
+                onClick={handleCancelEdit}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="w-4 h-4 mr-1" />
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsEditing(true)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <Pencil className="w-4 h-4 mr-1" />
+                Edit
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
                 onClick={() => onDelete(feedback._id)}
                 className="text-red-500 hover:text-red-700"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-4 h-4 mr-1" />
+                Delete
               </Button>
             </>
-          )
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

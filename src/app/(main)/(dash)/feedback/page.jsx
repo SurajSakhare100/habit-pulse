@@ -12,7 +12,6 @@ export default function FeedbackPage() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const handleFeedbackSubmit = (newFeedback) => {
     setFeedbacks((prev) => [newFeedback, ...prev]);
   };
@@ -65,25 +64,42 @@ export default function FeedbackPage() {
   }, []);
   
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4 text-center">Share Your Feedback</h1>
-
-      <FeedbackForm onFeedbackSubmit={handleFeedbackSubmit} />
-
-      <Separator className="mb-4" />
-
-      {loading ? (
-        <div className="flex justify-center items-center py-10">
-          <Loader2 className="animate-spin w-6 h-6 text-muted-foreground" />
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Left Column - Feedback Form */}
+        <div className="col-span-2 md:col-span-1 ">
+          <Card className=" shadow-sm ">
+            <CardContent className="">
+              <h1 className="text-2xl font-bold mb-6">Suggest a feature</h1>
+              <FeedbackForm onFeedbackSubmit={handleFeedbackSubmit} />
+            </CardContent>
+          </Card>
         </div>
-      ) : (
-        <FeedbackList
-          feedbacks={feedbacks}
-          onUpvote={handleUpvote}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      )}
+
+        {/* Right Column - Feedback List */}
+        <div className="col-span-2 md:col-span-2">
+          {loading ? (
+            <div className="flex justify-center items-center py-10">
+              <Loader2 className="animate-spin w-6 h-6 text-muted-foreground" />
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold">Feedback</h2>
+                <span className="text-sm text-muted-foreground">
+                  {feedbacks.length} items
+                </span>
+              </div>
+              <FeedbackList
+                feedbacks={feedbacks}
+                onUpvote={handleUpvote}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

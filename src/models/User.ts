@@ -8,7 +8,9 @@ export interface IUser {
   password?: string;
   emailVerified?: Date;
   isVerified?: boolean; // Persisted field
-  authProvider: 'email' | 'google'; // Added authProvider field to track the authentication method
+  authProvider: 'email' | 'google'; 
+  isPro?: boolean;
+  proSince?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,6 +28,8 @@ const userSchema = new Schema<IUser>(
       required: true,
       enum: ['email', 'google'], 
     },
+    isPro: { type: Boolean, default: false },
+    proSince: Date,
   },
   {
     timestamps: true,

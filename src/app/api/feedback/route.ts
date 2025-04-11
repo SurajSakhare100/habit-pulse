@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
@@ -15,11 +14,17 @@ export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { content } = await req.json();
+  const { title, description } = await req.json();
+  
+  if (!title || !description) {
+    return NextResponse.json({ error: 'Title and description are required' }, { status: 400 });
+  }
+
   await dbConnect();
 
   const feedback = await Feedback.create({
-    content,
+    title,
+    description,
     userId: session.user.id,
   });
 

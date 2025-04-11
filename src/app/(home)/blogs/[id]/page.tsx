@@ -3,12 +3,13 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
-import gfm from 'remark-gfm'; // ✅ NEW
+import gfm from 'remark-gfm';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'posts');
@@ -48,30 +49,49 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
   const { content, data } = matter(fileContents);
 
   const processedContent = await remark()
-    .use(gfm)   // ✅ Add GFM support
+    .use(gfm)
     .use(html)
     .process(content);
 
   const contentHtml = processedContent.toString();
 
   return (
-    <div className="max-w-3xl mx-auto p-8">
-      <Button className="mb-6">
-        <Link
-          href="/blogs"
-          className="text-sm flex items-center justify-center"
-          title="Back to Blogs"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span> Back to Blogs</span>
-        </Link>
-      </Button>
-      <h1 className="text-4xl font-bold mb-2">{data.title}</h1>
-      <p className="text-sm text-gray-500 mb-6">{data.date}</p>
+    <div className="min-h-screen bg-gray-50/50">
+      <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="mb-8">
+          <Button variant="ghost" className="mb-6 hover:bg-gray-100">
+            <Link href="/blogs" className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Blogs
+            </Link>
+          </Button>
+        </div>
 
-      <article className="prose prose-neutral dark:prose-invert max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
-      </article>
+          <article>
+            <header className="mb-8 pb-8 border-b">
+              <h1 className="text-4xl font-bold mb-4">{data.title}</h1>
+              <div className="flex items-center gap-4">
+                <time className="text-muted-foreground">
+                  {new Date(data.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                {data.readTime && (
+                  <>
+                  <span className="text-muted-foreground">·</span>
+                  <span className="text-muted-foreground">{data.readTime} min read</span>
+                  </>
+                )}
+              </div>
+            </header>
+
+            <div className="prose prose-neutral dark:prose-invert max-w-none">
+              <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+            </div>
+          </article>
+      </div>
     </div>
   );
 }

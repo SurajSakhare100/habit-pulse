@@ -37,7 +37,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Please verify your email first");
         }
 
-        return { id: user._id.toString(), name: user.name, email: user.email };
+        return { 
+          id: user._id.toString(), 
+          name: user.name, 
+          email: user.email,
+          isPro: user.isPro || false
+        };
       },
     }),
 
@@ -64,9 +69,10 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             image: user.image,
-            isVerified:true,
+            isVerified: true,
             emailVerified: new Date(),
             authProvider: 'google', // Google authentication provider
+            isPro: false // Default to free tier
           });
         }
         return true;
@@ -75,12 +81,19 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
       try {
         await dbConnect();
-        const user = await UserModel.findOne({ email: token.email });
+        // If user object is available (during sign in), add isPro to token
         if (user) {
-          token.id = user._id.toString();
+          token.isPro = user.isPro;
+        }
+        
+        // Always fetch latest user data
+        const dbUser = await UserModel.findOne({ email: token.email });
+        if (dbUser) {
+          token.id = dbUser._id.toString();
+          token.isPro = dbUser.isPro || false;
         }
         return token;
       } catch (error) {
@@ -88,11 +101,12 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
     },
-    async session({ session, token }: { session: any; token: any }) {
-      if (token.id) {
+    async session({ session, token }) {
+      if (token) {
         session.user = {
           ...session.user,
-          id: token.id
+          id: token.id as string,
+          isPro: Boolean(token.isPro)
         };
       }
       return session;

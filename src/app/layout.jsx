@@ -1,20 +1,56 @@
 // src/app/layout.tsx
 
-import { Inter } from 'next/font/google';
-import { Toaster } from '@/components/ui/toaster';
-import './globals.css';
-import { Analytics } from '@vercel/analytics/react';
-import Script from 'next/script';
+import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
+import { AuthProvider } from "@/components/auth-provider";
+import { Suspense } from "react";
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata = {
-  title: 'Habit Pulse – Free Habit Tracker App',
-  description: 'Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.',
+  title: "Habit Pulse - Free Habit Tracker App",
+  description:
+    "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
+  keywords: [
+    "free habit tracker app",
+    "printable habit tracker",
+    "daily habit tracker",
+    "habit tracker PDF",
+    "monthly habit tracker",
+    "weekly habit tracker",
+    "habit tracker Notion",
+    "free printable habit tracker",
+    "best free habit tracker app",
+    "habit tracking app",
+    "track habits free",
+    "simple habit tracker",
+    "digital habit tracker",
+    "bullet journal habit tracker",
+    "habit tracker for productivity",
+    "habit tracker download",
+    "minimalist habit tracker",
+    "editable habit tracker",
+    "habit tracker Excel",
+    "habit tracker Google Sheets",
+    "habit tracker calendar",
+    "aesthetic habit tracker",
+    "custom habit tracker",
+    "habit tracker ideas",
+    "PDF habit tracker template",
+    "Notion habit tracker template",
+    "free monthly habit tracker printable",
+    "daily habit tracker printable",
+    "habit tracker planner insert",
+    "habit tracker for students",
+    "habit tracker for wellness",
+  ],
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-32x32.png',
-    apple: '/apple-touch-icon.png',
+    icon: "/favicon.ico",
+    shortcut: "/favicon-32x32.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -22,21 +58,72 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <meta name="google-site-verification" content="b7yDmUftzFJzjwP96Jv0AQ6E3alSjSkx7felqcdVwqs" />
+        <meta
+          name="google-site-verification"
+          content="b7yDmUftzFJzjwP96Jv0AQ6E3alSjSkx7felqcdVwqs"
+        />
         <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
         {/* Open Graph */}
         <meta property="og:title" content="Habit Pulse - Track Your Habits" />
-        <meta property="og:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
-        <meta property="og:image" content="https://habitpulse.xyz/logo.png" /> {/* Use a real logo image, not favicon */}
+        <meta
+          property="og:description"
+          content="Track your daily habits and improve your lifestyle with Habit Pulse."
+        />
+        <meta property="og:image" content="https://habitpulse.xyz/logo.png" />{" "}
+        {/* Use a real logo image, not favicon */}
         <meta property="og:url" content="https://habitpulse.xyz/" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://habitpulse.xyz/" />
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Habit Pulse - Track Your Habits" />
-        <meta name="twitter:description" content="Track your daily habits and improve your lifestyle with Habit Pulse." />
+        <meta
+          name="twitter:description"
+          content="Track your daily habits and improve your lifestyle with Habit Pulse."
+        />
         <meta name="twitter:image" content="https://habitpulse.xyz/logo.png" />
+        <meta
+          name="keyword"
+          content="
+    Habit Pulse - Free Habit Tracker App,
+    Track Your Daily Habits,
+    free habit tracker app,
+    printable habit tracker,
+    daily habit tracker,
+    habit tracker PDF,
+    monthly habit tracker,
+    weekly habit tracker,
+    habit tracker Notion,
+    free printable habit tracker,
+    best free habit tracker app,
+    habit tracking app,
+    track habits free,
+    simple habit tracker,
+    digital habit tracker,
+    bullet journal habit tracker,
+    habit tracker for productivity,
+    habit tracker download,
+    minimalist habit tracker,
+    editable habit tracker,
+    habit tracker Excel,
+    habit tracker Google Sheets,
+    habit tracker calendar,
+    aesthetic habit tracker,
+    custom habit tracker,
+    habit tracker ideas,
+    PDF habit tracker template,
+    Notion habit tracker template,
+    free monthly habit tracker printable,
+    daily habit tracker,
+    habit tracker planner insert,
+    habit tracker for students,
+    habit tracker for wellness,
+  "
+        />
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -46,7 +133,8 @@ export default function RootLayout({ children }) {
               "@type": "WebApplication",
               name: "Habit Pulse",
               url: "https://habitpulse.xyz/",
-              description: "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
+              description:
+                "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
               image: "https://habitpulse.xyz/logo.png",
               applicationCategory: "Lifestyle",
               operatingSystem: "Web",
@@ -55,18 +143,32 @@ export default function RootLayout({ children }) {
                 price: "0",
                 priceCurrency: "USD",
                 availability: "https://schema.org/InStock",
-              }
+              },
             }),
           }}
         />
         {/* Favicons */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
 
       <body className={inter.className}>
+      <AuthProvider>
+      <Suspense>
         <main className="min-h-screen">{children}</main>
+        </Suspense>
+        </AuthProvider>
         <Analytics />
         <Toaster />
         <Script

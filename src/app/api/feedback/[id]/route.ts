@@ -8,17 +8,26 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const { content } = await req.json();
+  const { title, description } = await req.json();
+  
+  if (!title || !description) {
+    return NextResponse.json({ error: 'Title and description are required' }, { status: 400 });
+  }
+
   await dbConnect();
 
   const feedback = await Feedback.findOneAndUpdate(
     { _id: params.id, userId: session.user.id },
-    { content, updatedAt: new Date() },
+    { 
+      title,
+      description,
+      updatedAt: new Date() 
+    },
     { new: true }
   );
 
   if (!feedback) return NextResponse.json({ error: 'Not found or forbidden' }, { status: 403 });
-  return NextResponse.json({ success: true });
+  return NextResponse.json(feedback);
 }
 
 export async function DELETE(_: Request, { params }: { params: { id: string } }) {

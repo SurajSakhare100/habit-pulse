@@ -1,7 +1,14 @@
+"use client";
+
 import { Instagram } from 'lucide-react';
 import Link from 'next/link';
+import { Mail } from "lucide-react";
 
 export default function Footer({ border = false }: { border?: boolean }) {
+  const handleSupportClick = () => {
+    window.location.href = "mailto:sakharesuraj10@gmail.com?subject=HabitPulse Support Request";
+  };
+
   return (
     <footer>
       <div className="mx-auto max-w-6xl px-4 sm:px-6 border-t">
@@ -40,6 +47,13 @@ export default function Footer({ border = false }: { border?: boolean }) {
             <ul className="space-y-2 text-sm">
               <li><Link href="/legal/privacy-policy">Privacy Policy</Link></li>
               <li><Link href="/legal/terms-of-service">Terms of Service</Link></li>
+              <button
+              onClick={handleSupportClick}
+              className="flex items-center gap-2 text-sm  hover:text-primary transition-colors"
+            >
+              <Mail size={16} />
+              Support
+            </button>
             </ul>
           </div>
 

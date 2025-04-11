@@ -7,6 +7,15 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      isPro?: boolean;
     };
+  }
+
+  interface User {
+    id: string;
+    email: string;
+    name?: string;
+    image?: string;
+    isPro?: boolean;
   }
 }
