@@ -23,7 +23,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
     try {
       if (!session) {
         // If not logged in, redirect to sign in
-        signIn();
+       router.push('/auth/signin')
         return;
       }
 
