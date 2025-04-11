@@ -14,6 +14,16 @@ const client = new paypal.core.PayPalHttpClient(environment);
 const PRICE = 2.00;
 const CURRENCY = 'USD';
 
+// Function to clean up stale pending payments
+const cleanupStalePayments = async (userId: string) => {
+  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+  await Payment.deleteMany({
+    userId,
+    status: 'PENDING',
+    createdAt: { $lt: fifteenMinutesAgo }
+  });
+};
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession();
@@ -29,6 +39,9 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
+
+    // Clean up stale pending payments
+    await cleanupStalePayments(user._id);
 
     // Check if user is already Pro
     if (user.isPro) {

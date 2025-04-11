@@ -64,6 +64,16 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
         return;
       }
 
+      if (data.error === 'Pending payment exists') {
+        toast({
+          title: "Payment Pending",
+          description: "You have a pending payment. Please try again after 15 minutes.",
+          variant: "default",
+          className: "bg-yellow-500 text-white border-none",
+        });
+        return;
+      }
+
       if (data.url) {
         // Redirect to PayPal checkout
         router.push(data.url);
