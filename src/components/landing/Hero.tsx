@@ -57,7 +57,7 @@ export default function HeroHome() {
           <div className="mx-auto max-w-3xl">
             <div className=" aspect-video rounded-2xl  px-5  shadow-2xl">
             <Image
-                                    src={require("../../../public/myhabits.png")}
+                                    src={require("../../../public/myhabit.png")}
                                     alt="Logo"
                                   />
             </div>

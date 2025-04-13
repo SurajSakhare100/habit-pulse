@@ -54,7 +54,6 @@ export async function PUT(
 
     await dbConnect();
     const id = await params.id;
-
     const habit = await HabitModel.findOneAndUpdate(
       {
         _id: id,

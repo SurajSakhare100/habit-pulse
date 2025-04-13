@@ -11,7 +11,7 @@ const clientSecret = process.env.PAYPAL_CLIENT_SECRET!;
 const environment = new paypal.core.LiveEnvironment(clientId, clientSecret);
 const client = new paypal.core.PayPalHttpClient(environment);
 
-const PRICE = 2.00;
+const PRICE = 5.00;
 const CURRENCY = 'USD';
 
 // Function to clean up stale pending payments

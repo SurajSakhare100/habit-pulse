@@ -13,7 +13,7 @@ const environment = process.env.NODE_ENV === 'production'
   : new paypal.core.SandboxEnvironment(clientId, clientSecret);
 const client = new paypal.core.PayPalHttpClient(environment);
 
-const EXPECTED_AMOUNT = 2.00;
+const EXPECTED_AMOUNT = 5.00;
 const EXPECTED_CURRENCY = 'USD';
 
 export async function GET(req: Request) {

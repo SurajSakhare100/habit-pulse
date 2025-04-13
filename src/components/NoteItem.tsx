@@ -77,7 +77,7 @@ export function NoteItem({
   return (
     <div className="flex gap-2  bg-card items-start justify-center rounded-2xl p-4 ">
       {/* Date Column */}
-      <div className="p-4 m-1 aspect-square flex flex-col bg-secondary items-center justify-center rounded-xl shadow-sm">
+      <div className="p-4 m-1 aspect-square flex flex-col bg-muted items-center justify-center rounded-xl shadow-sm">
         <div className="font-medium text-xs text-muted-foreground">
           {format(date, 'EEE').toUpperCase()}
         </div>
@@ -113,7 +113,7 @@ export function NoteItem({
                   <h2 className="font-medium text-lg">{title}</h2>
                   
                   </div>
-                  <p className="text-sm text-wrap leading-relaxed text-foreground/90">
+                  <p className="text-xs text-wrap leading-relaxed text-foreground/90">
                     {content}
                   </p>
                 </div>

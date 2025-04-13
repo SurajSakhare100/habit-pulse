@@ -149,8 +149,6 @@ export default function HabitPage() {
       } else {
         updatedLogs.push({
           date, status: true,
-          _id: "",
-          completed: false
         });
       }
 

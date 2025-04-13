@@ -108,10 +108,10 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
               <Check className="h-5 w-5 text-green-500 mr-2" />
               <span>Up to 3 habits</span>
             </li>
-            <li className="flex items-center ">
+            {/* <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />
               <span>Basic statistics</span>
-            </li>
+            </li> */}
             <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />
               <span>Up to 3 Journal Entries</span>
@@ -134,7 +134,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
           </div>
 
           <h3 className="text-xl font-semibold  mb-4">Pro</h3>
-          <p className="text-3xl font-bold  mb-6">$2<span className="text-lg font-normal ">/one-time</span></p>
+          <p className="text-3xl font-bold  mb-6">$5.00<span className="text-lg font-normal ">/one-time</span></p>
           
           <ul className="space-y-4 mb-8">
             <li className="flex items-center ">
@@ -143,7 +143,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
             </li>
             <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />
-              <span>Basic statistics</span>
+              <span>Advanced analytics</span>
             </li>
             <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />

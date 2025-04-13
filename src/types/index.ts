@@ -8,9 +8,7 @@ export interface Note {
   updatedAt?: string
 } 
 export interface Log {
-  _id: string
   date: string
-  completed: boolean
   status: boolean
 }
 export interface Habit {

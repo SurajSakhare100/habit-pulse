@@ -40,50 +40,46 @@ export function Navigation() {
   if (!session) return null;
 
   return (
-    <nav className="border-b px-20">
-      <div className="flex h-16 items-center px-4">
+    <nav className="border-b px-20 ">
+      <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
         <div className="flex items-center space-x-4">
-           <div className="flex flex-1 items-center cursor-pointer">
-                      <Link href="/">
-                      <Image
-                        src={require("../../public/favicon.ico")}
-                        className="h-8 w-8 rounded-full"
-                        alt="Logo"
-                      />
-                      </Link>
-                    </div>
+          <div className="flex flex-1 items-center cursor-pointer">
+            <Link href="/">
+              <Image
+                src={require("../../public/favicon.ico")}
+                className="h-8 w-8 rounded-full"
+                alt="Logo"
+              />
+            </Link>
+          </div>
 
           <Link
             href="/habits"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/habits" ? "text-foreground" : "text-foreground/60"
-            }`}
+            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/habits" ? "text-foreground" : "text-foreground/60"
+              }`}
           >
             Habits
           </Link>
           <Link
             href="/profile"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/profile" ? "text-foreground" : "text-foreground/60"
-            }`}
+            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/profile" ? "text-foreground" : "text-foreground/60"
+              }`}
           >
             Profile
           </Link>
           <Link
             href="/feedback"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "feedback" ? "text-foreground" : "text-foreground/60"
-            }`}
-        
+            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "feedback" ? "text-foreground" : "text-foreground/60"
+              }`}
+
           >
             feedback
           </Link>
           <Link
             href="/analytics"
-            className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/analytics" ? "text-foreground" : "text-foreground/60"
-            }`}
-        
+            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/analytics" ? "text-foreground" : "text-foreground/60"
+              }`}
+
           >
             Analytics
           </Link>
@@ -92,8 +88,8 @@ export function Navigation() {
           <Button
             onClick={toggleTheme}
             className="px-4 py-2 rounded-full bg-card text-card-foreground flex items-center space-x-2"
-            >
-            {theme === "light" ? <Moon size={20} /> : <Sun size={20}/>}
+          >
+            {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

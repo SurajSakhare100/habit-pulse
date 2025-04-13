@@ -140,7 +140,6 @@ export default function HabitsAnalytics() {
           <div className="h-[180px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.weeklyData}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                 <XAxis 
                   dataKey="day" 
                   axisLine={false}

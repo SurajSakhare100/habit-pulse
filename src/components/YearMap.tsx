@@ -70,10 +70,10 @@ export function YearMap({ className, habit }: YearMapProps) {
   })
 
   return (
-    <Card className={cn('p-4', 'overflow-x-auto', className)}>
-      <div className="flex items-center justify-center mb-2">
+    <Card className={cn('p-4', 'overflow-x-auto h-[400px] flex items-center justify-center', className)}>
+      {/* <div className="flex items-center justify-center mb-2">
         <h3 className="text-lg text-center font-medium">Habit Entries (Past 8 Months)</h3>
-      </div>
+      </div> */}
 
       {/* Month labels */}
       <div className="flex ml-6 mb-1 gap-1 items-center justify-center">
