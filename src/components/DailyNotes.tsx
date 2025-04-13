@@ -8,6 +8,8 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Edit, Trash2, Save, X } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { NoteItem } from './NoteItem';
+import { NotesList } from './NotesList';
 
 interface DailyNoteProps {
   habitId: string;
@@ -19,7 +21,7 @@ interface Note {
   date: string;
   content: string;
   updatedAt: string;
-}
+  }
 
 export default function DailyNotes({ habitId }: DailyNoteProps) {
   const { toast } = useToast();
@@ -151,49 +153,8 @@ export default function DailyNotes({ habitId }: DailyNoteProps) {
           {notes.length === 0 ? (
             <p className="">No notes found.</p>
           ) : (
-            notes.map((note) => (
-              <li key={note._id} className="border rounded-lg p-4 ">
-                <p className="text-sm  mb-1">
-                  {dayjs(note.date).format('MMMM D, YYYY')} {note.date === today && '(Today)'}
-                </p>
-                {editingId === note._id ? (
-                  <>
-                    <Textarea
-                      placeholder="Edit your note..."
-                      className="w-full border rounded mb-2"
-                      value={note.content}
-                      onChange={(e) =>
-                        setNotes(prev =>
-                          prev.map(n =>
-                            n._id === note._id ? { ...n, content: e.target.value } : n
-                          )
-                        )
-                      }
-                    />
-                    <div className="flex gap-2">
-                      <Button onClick={() => handleUpdate(note)} className="bg-green-600 text-white flex items-center gap-1">
-                        <Save size={16} /> Save
-                      </Button>
-                      <Button onClick={() => setEditingId(null)} className="bg-gray-400 text-white flex items-center gap-1">
-                        <X size={16} /> Cancel
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <p className=" whitespace-pre-line mb-2">{note.content}</p>
-                    <div className="flex gap-2">
-                      <Button onClick={() => setEditingId(note._id)} className="bg-yellow-500 text-white flex items-center gap-1">
-                        <Edit size={16} /> Edit
-                      </Button>
-                      <Button onClick={() => handleDelete(note._id)} className="bg-red-600 text-white flex items-center gap-1">
-                        <Trash2 size={16} /> Delete
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </li>
-            ))
+
+            <NotesList notesCompleted={notes} />
           )}
         </ul>
       </div>

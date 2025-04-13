@@ -1,20 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/db';
-import Note from '@/models/Note';
+import { Note } from '@/models/Note';
+import User from '@/models/User';
 
 export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const habitId = searchParams.get('habitId');
     const date = searchParams.get('date');
 
     if (!habitId) {
-      return NextResponse.json({ error: 'habitId and date are required' }, { status: 400 });
+      return NextResponse.json({ error: 'habitId is required' }, { status: 400 });
     }
 
     await dbConnect();
-    const note = await Note.find({ habitId });
-    return NextResponse.json(note || null);
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const notes = await Note.find({ 
+      habitId,
+      userId: user._id,
+      ...(date ? { date: new Date(date) } : {})
+    }).sort({ date: -1 });
+
+    return NextResponse.json(notes);
   } catch (error) {
     console.error('GET error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
@@ -23,6 +41,11 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const habitId = searchParams.get('habitId');
     const date = searchParams.get('date');
@@ -44,13 +67,29 @@ export async function POST(request: NextRequest) {
     }
 
     await dbConnect();
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
 
-    const existing = await Note.findOne({ habitId, date });
+    const existing = await Note.findOne({ 
+      habitId, 
+      date: inputDate,
+      userId: user._id 
+    });
+    
     if (existing) {
       return NextResponse.json({ error: 'Note already exists' }, { status: 409 });
     }
 
-    const newNote = await Note.create({ habitId, date, content });
+    const newNote = await Note.create({
+      title: `Note for ${new Date(date).toLocaleDateString()}`,
+      content,
+      date: inputDate,
+      userId: user._id,
+      habitId
+    });
+
     return NextResponse.json(newNote, { status: 201 });
   } catch (error) {
     console.error('POST error:', error);
@@ -58,9 +97,13 @@ export async function POST(request: NextRequest) {
   }
 }
 
-
 export async function PUT(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const habitId = searchParams.get('habitId');
     const date = searchParams.get('date');
@@ -69,15 +112,27 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'habitId and date are required' }, { status: 400 });
     }
 
-    const { updatedContent } = await request.json();
-    if (!updatedContent) {
-      return NextResponse.json({ error: 'updatedContent is required' }, { status: 400 });
+    const { content } = await request.json();
+    if (!content) {
+      return NextResponse.json({ error: 'Content is required' }, { status: 400 });
     }
 
     await dbConnect();
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
     const updated = await Note.findOneAndUpdate(
-      { habitId, date },
-      { content: updatedContent, updatedAt: new Date() },
+      { 
+        habitId, 
+        date: new Date(date),
+        userId: user._id 
+      },
+      { 
+        content,
+        updatedAt: new Date()
+      },
       { new: true }
     );
 
@@ -94,6 +149,11 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const habitId = searchParams.get('habitId');
     const date = searchParams.get('date');
@@ -103,7 +163,20 @@ export async function DELETE(request: NextRequest) {
     }
 
     await dbConnect();
-    await Note.findOneAndDelete({ habitId, date });
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const deleted = await Note.findOneAndDelete({ 
+      habitId, 
+      date: new Date(date),
+      userId: user._id 
+    });
+
+    if (!deleted) {
+      return NextResponse.json({ error: 'Note not found' }, { status: 404 });
+    }
 
     return new Response(null, { status: 204 });
   } catch (error) {

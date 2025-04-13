@@ -25,10 +25,10 @@ export default function FeedbackItem({ feedback, onUpvote, onEdit, onDelete }) {
     setEditedDescription(feedback.description);
   };
 
-  const isOwner = feedback.userId === session?.user.id; // Check if the current user is the owner
+  const isOwner = feedback.userId === session?.user.id; 
 
   return (
-    <div className="p-4 mb-4 border border-opacity-50 rounded-2xl shadow-xl ">
+    <div className="p-4 mb-4 bg-white dark:bg-[#161616] rounded-2xl shadow-xl ">
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1 space-y-2">
           {isEditing ? (

@@ -8,9 +8,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { useToast } from "@/components/ui/use-toast";
-import { Pencil, Trash2 } from 'lucide-react';
+import { BarChart2, Pencil, Trash2 } from 'lucide-react';
 import { getWeekCompletion } from "@/lib/getWeekCompletion";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 const PRESET_COLORS = [
   "#66BB6A", // Soft Green (replacing #22c55e)
   "#42A5F5", // Soft Blue (replacing #3b82f6)
@@ -318,7 +319,7 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex gap-2">
                   <div className="flex-1">
-                    <label className="text-sm text-gray-600 mb-2 block">Name</label>
+                    <label className="text-sm mb-2 block">Name</label>
                     <Input
                       value={newHabit.habitName}
                       onChange={(e) => setNewHabit({ ...newHabit, habitName: e.target.value })}
@@ -328,7 +329,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600 mb-2 block">Weekly Goal</label>
+                    <label className="text-sm mb-2 block">Weekly Goal</label>
                     <Input
                       type="number"
                       min={1}
@@ -344,7 +345,7 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-600 mb-2 block">Choose an Emoji</label>
+                  <label className="text-sm mb-2 block">Choose an Emoji</label>
                   <EmojiPicker
                     theme={Theme.DARK}
                     lazyLoadEmojis
@@ -356,7 +357,7 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <label className="text-sm text-gray-600 mb-2 block">Color</label>
+                  <label className="text-sm mb-2 block">Color</label>
                   <div className="flex gap-2">
                     {PRESET_COLORS.map((color) => (
                       <Button
@@ -440,7 +441,7 @@ export default function Home() {
                 <div className="space-y-4">
                   <div className="flex gap-2">
                     <div className="flex-1">
-                      <label className="text-sm text-gray-600 mb-2 block">Name</label>
+                      <label className="text-sm mb-2 block">Name</label>
                       <Input
                         value={editingHabit.habitName}
                         onChange={(e) => setEditingHabit(prev => prev ? ({
@@ -452,7 +453,7 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="text-sm text-gray-600 mb-2 block">Goal</label>
+                      <label className="text-sm mb-2 block">Goal</label>
                       <Input
                         type="number"
                         min={1}
@@ -470,7 +471,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600 mb-2 block">Emoji</label>
+                    <label className="text-sm mb-2 block">Emoji</label>
                     <EmojiPicker
                       theme={Theme.DARK}
                       lazyLoadEmojis
@@ -485,7 +486,7 @@ export default function Home() {
                   </div>
 
                   <div>
-                    <label className="text-sm text-gray-600 mb-2 block">Color</label>
+                    <label className="text-sm mb-2 block">Color</label>
                     <div className="flex gap-2">
                       {PRESET_COLORS.map((color) => (
                         <button
@@ -540,10 +541,11 @@ export default function Home() {
               </div>
 
               <div className="flex items-center gap-2">
+                
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-600 hover:text-white hover:bg-gray-200"
+                  className=""
                   onClick={() => {
                     setEditingHabit(habit);
                     setIsEditOpen(true);
@@ -577,6 +579,7 @@ export default function Home() {
                 >
                   <span className="text-xs mb-1">{day.day}</span>
                   <span className="text-lg font-bold">{day.dayNum}</span>
+                  
                 </button>
               ))}
             </div>

@@ -72,11 +72,20 @@ export function Navigation() {
           <Link
             href="/feedback"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "f" ? "text-foreground" : "text-foreground/60"
+              pathname === "feedback" ? "text-foreground" : "text-foreground/60"
             }`}
         
           >
             feedback
+          </Link>
+          <Link
+            href="/analytics"
+            className={`text-sm font-medium transition-colors hover:text-primary ${
+              pathname === "/analytics" ? "text-foreground" : "text-foreground/60"
+            }`}
+        
+          >
+            Analytics
           </Link>
         </div>
         <div className="ml-auto flex items-center space-x-4">
