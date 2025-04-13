@@ -18,6 +18,7 @@ interface DailyNoteProps {
 interface Note {
   _id: string;
   habitId: string;
+  title: string;
   date: string;
   content: string;
   updatedAt: string;
@@ -154,7 +155,7 @@ export default function DailyNotes({ habitId }: DailyNoteProps) {
             <p className="">No notes found.</p>
           ) : (
 
-            <NotesList notesCompleted={notes} />
+            <NotesList notes={notes} onUpdate={(id, title, content) => handleUpdate({ _id: id, title, content, date, habitId, updatedAt: "" })} onDelete={handleDelete} />
           )}
         </ul>
       </div>
