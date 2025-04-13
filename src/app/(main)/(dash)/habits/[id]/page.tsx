@@ -6,7 +6,6 @@ import axios from "axios";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { IHabit } from "@/models/Habit";
 import { format, startOfWeek, eachDayOfInterval, addDays, startOfMonth, endOfMonth, isSameMonth, startOfDay } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,7 @@ import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { ArrowLeft, ArrowRight, BookOpen, Flame, Pencil, Trash2, Trophy } from "lucide-react";
 import Link from "next/link";
 import { YearMap } from "@/components/YearMap"
-import { Note } from "@/types"
+import { Habit, Note } from "@/types"
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -32,10 +31,10 @@ export default function HabitPage() {
 
 
   const { toast } = useToast();
-  const [habit, setHabit] = useState<IHabit | null>(null);
+  const [habit, setHabit] = useState<Habit | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [editingHabit, setEditingHabit] = useState<IHabit | null>(null);
+  const [editingHabit, setEditingHabit] = useState<Habit | null>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
 
@@ -148,7 +147,11 @@ export default function HabitPage() {
       if (existingLog !== -1) {
         updatedLogs[existingLog].status = !updatedLogs[existingLog].status;
       } else {
-        updatedLogs.push({ date, status: true });
+        updatedLogs.push({
+          date, status: true,
+          _id: "",
+          completed: false
+        });
       }
 
       const response = await axios.put(`/api/habits/${params.id}`, {
