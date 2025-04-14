@@ -32,7 +32,7 @@ const sections = [
       description:
         "Journaling helps you process your journey. Write freely, stay grounded, and reflect on your wins and challenges.",
       cta: "Open journal",
-      link: "/journal",
+      link: "/habits",
     },
     // {
     //   type: "image",
@@ -52,20 +52,20 @@ const sections = [
         description:
           "Celebrate your consistency. See your yearly stats, biggest streaks, and milestones hit throughout 2024.",
         cta: "View my year",
-        link: "/year-review",
+        link: "/habits",
       },
   ];
   
 
 export default function Section() {
   return (
-    <div className="max-w-6xl mx-auto px-8 py-12 my-6 md:my-20 ">
+    <div className="max-w-6xl mx-auto px-8  my-6  ">
       <h2 className="font-extrabold text-4xl md:text-5xl tracking-tight mb-4 md:mb-6 text-center">Habits made fun, easy, and automatic</h2>
       <p className="md:text-lg opacity-90 mb-12 md:mb-20 text-center">Exercise more, read daily, and meditate consistently!</p>
       {sections.map((section, index) => (
         <div
           key={index}
-          className={`flex flex-col ${
+          className={`flex sm:mb-12 mb-0 flex-col ${
             index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
           } gap-12 items-center`}
         >
@@ -75,6 +75,8 @@ export default function Section() {
               className="rounded-3xl aspect-square w-full sm:w-96 lg:w-[28rem] dark:border-2 border-2 dark:shadow-lg"
               autoPlay
               loop
+              muted
+              preload="auto"
               playsInline
 
             >
@@ -84,7 +86,7 @@ export default function Section() {
             <img
               src={section.media}
               alt={section.heading}
-              className="rounded-3xl aspect-square w-full sm:w-96 lg:w-[28rem] dark:border-2 border-base-content/20 dark:shadow-lg"
+              className="rounded-3xl aspect-square w-full sm:w-96 lg:w-[28rem] dark:border-2 border-base-content/20 dark:shadow-lg mt-6 sm:mt-0"
             />
           )}
           <div className="text-left space-y-4 md:space-y-6">
@@ -95,7 +97,7 @@ export default function Section() {
               {section.heading}
             </h3>
             <p className="text-base-content/80">{section.description}</p>
-           <Button className="" >
+           <Button className="mb-4" >
            <Link className="" href={section.link}>
               {section.cta}
             </Link>
