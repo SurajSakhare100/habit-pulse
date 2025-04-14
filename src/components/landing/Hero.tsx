@@ -47,7 +47,7 @@ export default function HeroHome() {
               <div className="mx-auto  ">
                 <Button className="">
 
-                <Link href="/auth/signin" className="p-4  ">
+                <Link href="/habits" className="p-4  ">
                     <span className="relative inline-flex items-center ">
                       Start your journey Today {" "}
                       <span className="ml-1 ">

@@ -20,11 +20,11 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
   const handleUpgradeClick = async () => {
     setIsLoading(true);
 
-    
+
     try {
       if (!session) {
         // If not logged in, redirect to sign in
-       await router.push('/auth/signin')
+        await router.push('/auth/signin')
         return;
       }
 
@@ -95,25 +95,25 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
   return (
     <div className="w-full mx-auto px-4 my-20 max-w-5xl ">
       <div className="flex flex-col text-center w-full mb-20">
-  <div className="mb-4 flex items-center justify-center ">
-    <div className="w-fit  bg-blue-500 text-white px-3 py-1 rounded-full text-sm">✨ Build Better Habits — Start Now ✨</div>
-  </div>
-  <h2 className="max-w-5xl font-bold text-2xl lg:text-4xl tracking-tight mb-8 mx-auto">
-    Stop wasting time on ineffective routines
-  </h2>
-  <div className="text-base-content-secondary max-w-md mx-auto">
-    Break free from bad habits, stay on track with your goals, and make progress every day.
-   
-  </div>
-</div>
+        <div className="mb-4 flex items-center justify-center ">
+          <div className="w-fit  bg-blue-500 text-white px-3 py-1 rounded-full text-sm fade-in-up animate-fade-in-up">✨ Launch discount — 90% Off ✨</div>
+        </div>
+        <h2 className="max-w-5xl font-bold text-2xl lg:text-4xl tracking-tight mb-8 mx-auto">
+          Stop wasting time on ineffective routines
+        </h2>
+        <div className="text-base-content-secondary max-w-md mx-auto">
+          Break free from bad habits, stay on track with your goals, and make progress every day.
 
-      
+        </div>
+      </div>
+
+
       <div className="grid md:grid-cols-2 gap-8 ">
         {/* Free Plan */}
         <div className="rounded-lg p-8 border  ">
           <h3 className="text-xl font-semibold  mb-4">Free</h3>
           <p className="text-3xl font-bold  mb-6">$0<span className="text-lg font-normal ">/forever</span></p>
-          
+
           <ul className="space-y-4 mb-8">
             <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />
@@ -129,7 +129,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
             </li>
           </ul>
 
-          <Button 
+          <Button
             className="w-full border-black"
             variant="outline"
             onClick={() => router.push('/habits')}
@@ -145,9 +145,22 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
           </div>
 
           <h3 className="text-xl font-semibold  mb-4">Pro</h3>
-          <p className="text-3xl font-bold  mb-6">$5.00<span className="text-lg font-normal ">/one-time</span></p>
-          
-          <ul className="space-y-4 mb-8">
+
+          <div className="flex flex-wrap items-end gap-2">
+  {/* Original Price */}
+  <p className="text-lg text-base-content/80 line-through mb-2">$49</p>
+
+  {/* Discounted Price */}
+  <p className="text-5xl font-extrabold tracking-tight ">$5</p>
+
+  {/* Deal Description */}
+  <p className="text-sm text-base-content/60 font-semibold">
+    / Lifetime deal (yours forever)
+  </p>
+</div>
+
+
+          <ul className="space-y-4 mb-8 mt-4">
             <li className="flex items-center ">
               <Check className="h-5 w-5 text-green-500 mr-2" />
               <span>Unlimited habits</span>
@@ -179,7 +192,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
 
           </ul>
 
-          <Button 
+          <Button
             className="w-full"
             onClick={handleUpgradeClick}
             disabled={isLoading}
@@ -187,8 +200,8 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
             {isLoading ? "Processing..." : session?.user?.isPro ? "Already Pro" : "Upgrade to Pro"}
           </Button>
 
-          <Badge className='flex items-center justify-center mt-4 bg-muted text-foreground'>
-              for indian users pro plan is currently not available 😞
+          <Badge className='flex items-center justify-center mt-4 bg-muted text-foreground text-xs'>
+            for indian users pro plan is currently not available 😞
           </Badge>
         </div>
       </div>
