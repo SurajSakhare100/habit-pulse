@@ -3,22 +3,29 @@ import { NextResponse } from "next/server";
 
 export default withAuth(
   function middleware(req) {
-    return NextResponse.next();
+    const res = NextResponse.next();
+
+    // Set security headers
+    res.headers.set('X-Frame-Options', 'DENY');
+    res.headers.set('Content-Security-Policy', "frame-ancestors 'none';");
+
+    return res;
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token, // Check if the token exists (user is authenticated)
+      authorized: ({ token }) => !!token,
     },
     pages: {
-      signIn: "/auth/signin", // Redirect to sign-in page if not authorized
+      signIn: "/auth/signin",
     },
   }
 );
 
+// Match only protected routes
 export const config = {
   matcher: [
-    "/habits/:path*",    
-    "/profile",         
-    "/feedback",        
+    "/habits/:path*",
+    "/profile",
+    "/feedback",
   ],
 };
