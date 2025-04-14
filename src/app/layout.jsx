@@ -11,9 +11,9 @@ import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const metadata = {
-  title: "Habit Pulse - Free Habit Tracker App",
+  title: "Habit Pulse - Build Better Habits Every Day",
   description:
-    "Habit Pulse helps you build better daily habits with a clean, simple tracker. Improve your lifestyle and productivity today.",
+    "Track, analyze, and improve your daily habits with our intuitive habit tracking platform. Turn ambitions into achievements.",
   keywords: [
     "free habit tracker app",
     "printable habit tracker",
