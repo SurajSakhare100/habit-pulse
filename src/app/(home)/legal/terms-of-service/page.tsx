@@ -2,7 +2,7 @@ import React from 'react';
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="max-w-6xl mx-auto p-4">
       <h1 className="text-4xl font-semibold mb-6">HabitPulse Terms of Use</h1>
       <p className="mb-4">Updated: march 20, 2025</p>
 
@@ -84,7 +84,7 @@ const TermsOfService: React.FC = () => {
         If you have any questions or concerns regarding these Terms, please contact us at:
       </p>
       <p>
-        <strong>Email</strong>: [Insert Contact Email]
+        <strong>Email</strong>:sakharesuraj10@gmail.com
       </p>
     </div>
   );
