@@ -10,8 +10,11 @@ import { Button } from "../ui/button";
 
 export default function HeroHome() {
   return (
-    <section>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="">
+      <div className="  mx-auto max-w-6xl px-4 sm:px-6">
+     <div className="">
+     <Link className="absolute left-6 bottom-6" href="https://www.producthunt.com/posts/habit-pulse-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-habit&#0045;pulse&#0045;2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=952963&theme=light&t=1744614805122" alt="Habit&#0032;Pulse - Build&#0032;Better&#0032;Habits&#0032;Every&#0032;Day | Product Hunt"  width="250" height="54" /></Link>
+     </div>
         <div className="pb-12 pt-32 md:pb-20 md:pt-20">
           <div className="pb-12 text-center ">
          
