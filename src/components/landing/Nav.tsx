@@ -50,7 +50,7 @@ export default function Header() {
   return (
     <header className="w-full z-50">
       <div className="fixed w-full top-0 z-[9999] bg-secondary px-4 py-1.5 text-center text-sm text-neutral-content shadow-lg">🏗️ Habit Pulse is in beta. Get the early adopter price!</div>
-      <div className="mx-auto max-w-6xl px-4 mt-10 sm:px-6 md:mt-14">
+      <div className="mx-auto max-w-6xl px-4 mt-16 sm:px-6 md:mt-14">
         <div className="flex h-14 items-center bg-secondary justify-between gap-3 rounded-2xl px-3 shadow-md backdrop-blur-sm bg-card/80 backdrop-saturate-150 border-card">
           {/* Logo */}
           <div className="flex flex-1 items-center cursor-pointer">

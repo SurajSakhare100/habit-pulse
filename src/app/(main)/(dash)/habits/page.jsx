@@ -382,53 +382,59 @@ export default function Home() {
             </DialogContent>
           </Dialog>
         </div>
-        <div className="bg-secondary rounded-lg p-4 flex items-center justify-center ">
-          <div className="grid grid-cols-7 gap-6">
-            {week.map((day) => (
-              <div
-                key={day.date}
-                className={`flex flex-col items-center py-2  w-20  rounded-2xl ${day.date === todayDateStr ? 'bg-green-100/50 border border-green-400' : ''
-                  }`}
-              >
-                <span className="text-sm mb-1 text-foreground">{day.day}</span>
-                <div className="relative flex items-center justify-center w-12 h-12">
-                  <svg className="w-full h-full" viewBox="0 0 36 36">
-                    <path
-                      d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke="var(--muted)"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M18 2.0845
-                    a 15.9155 15.9155 0 0 1 0 31.831
-                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                      fill="none"
-                      stroke={PRESET_COLORS[0]} // Orange for progress
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeDasharray={`${day.completionRate}, 100`}
-                    />
-                    <text
-                      x="18"
-                      y="20.35"
-                      className="text-[10px] font-bold fill-foreground"
-                      textAnchor="middle"
-                    >
-                      {day.dayNum}
-                    </text>
-                  </svg>
-                  {day.date === todayDateStr && (
-                    <div className="absolute -bottom-4 w-3 h-3 bg-green-400 rounded-full" />
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="bg-secondary rounded-lg p-4 w-full">
+  <div className="grid grid-cols-4 xs:grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4">
+    {week.map((day) => (
+      <div
+        key={day.date}
+        className={`flex flex-col items-center py-2 w-full rounded-2xl ${
+          day.date === todayDateStr
+            ? 'bg-green-100/50 border border-green-400'
+            : ''
+        }`}
+      >
+        <span className="text-[10px] sm:text-xs mb-1 text-foreground">
+          {day.day}
+        </span>
+        <div className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12">
+          <svg className="w-full h-full" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="var(--muted)"
+              strokeWidth="4"
+              strokeLinecap="round"
+            />
+            <path
+              d="M18 2.0845
+              a 15.9155 15.9155 0 0 1 0 31.831
+              a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke={PRESET_COLORS[0]}
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray={`${day.completionRate}, 100`}
+            />
+            <text
+              x="18"
+              y="20.35"
+              className="text-[8px] sm:text-[10px] font-bold fill-foreground"
+              textAnchor="middle"
+            >
+              {day.dayNum}
+            </text>
+          </svg>
+          {day.date === todayDateStr && (
+            <div className="absolute -bottom-3 sm:-bottom-2 w-2 h-2 sm:w-2.5 sm:h-2.5 bg-green-400 rounded-full" />
+          )}
         </div>
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
       <Tabs defaultValue="daily" className=" mx-auto my-6">
         <TabsList className="w-60  rounded-xl shadow-sm space-x-2 py-4">
@@ -459,7 +465,7 @@ export default function Home() {
               {habits.map((habit) => (
                 <div
                   key={habit._id}
-                  className="rounded-2xl p-6 bg-secondary"
+                  className="rounded-2xl p-4 sm:p-6 bg-secondary"
                 >
                   <div className="flex items-center justify-between mb-6 ">
                     <div
@@ -505,12 +511,12 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-7 gap-3">
+                  <div className="grid grid-cols-7 gap-4 sm:gap-3">
                     {getWeekDays(habit.logs).map((day) => (
                       <button
                         key={day.date}
                         onClick={() => toggleDay(habit._id, day.date)}
-                        className={`flex flex-col items-center p-2 rounded-xl transition-all ${day.checked
+                        className={`flex flex-col items-center px-4 py-2 rounded-xl transition-all ${day.checked
                           ? 'text-white'
                           : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
                           }`}
@@ -518,8 +524,8 @@ export default function Home() {
                           backgroundColor: day.checked ? habit.color : undefined
                         }}
                       >
-                        <span className="text-xs mb-1">{day.day}</span>
-                        <span className="text-lg font-bold">{day.dayNum}</span>
+                        <span className="text-[10px] sm:text-xs mb-1">{day.day}</span>
+                        <span className="text-sm sm:text-lg font-bold">{day.dayNum}</span>
 
                       </button>
                     ))}
@@ -535,87 +541,99 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-2">
-              <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+            <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
+  <DialogContent className="w-[90%] max-w-xs p-4 max-h-[85vh] overflow-y-auto rounded-lg">
+    <DialogHeader>
+      <DialogTitle className="text-base">Edit Habit</DialogTitle>
+    </DialogHeader>
 
-                <DialogContent className="max-w-[300px]">
-                  <DialogHeader>
-                    <DialogTitle className="">Edit Habit</DialogTitle>
-                  </DialogHeader>
-                  {editingHabit && (
-                    <div className="space-y-4">
-                      <div className="flex gap-2">
-                        <div className="flex-1">
-                          <label className="text-sm mb-2 block">Name</label>
-                          <Input
-                            value={editingHabit.habitName}
-                            onChange={(e) => setEditingHabit(prev => prev ? ({
-                              ...prev,
-                              habitName: e.target.value
-                            }) : null)}
-                            className="bg-gray-800 border-gray-700 text-white"
-                          />
-                        </div>
+    {editingHabit && (
+      <div className="space-y-3 text-sm">
+        {/* Name & Goal */}
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="text-xs mb-1 block text-muted-foreground">Name</label>
+            <Input
+              value={editingHabit.habitName}
+              onChange={(e) =>
+                setEditingHabit((prev) =>
+                  prev ? { ...prev, habitName: e.target.value } : null
+                )
+              }
+              className="h-8 text-sm "
+            />
+          </div>
 
-                        <div>
-                          <label className="text-sm mb-2 block">Goal</label>
-                          <Input
-                            type="number"
-                            min={1}
-                            max={7}
-                            value={editingHabit.goal.frequency}
-                            onChange={(e) => setEditingHabit(prev => prev ? ({
-                              ...prev,
-                              goal: {
-                                frequency: parseInt(e.target.value) || 1
-                              }
-                            }) : null)}
-                            className="bg-gray-800 border-gray-700 text-white w-20"
-                          />
-                        </div>
-                      </div>
+          <div>
+            <label className="text-xs mb-1 block text-muted-foreground">Goal</label>
+            <Input
+              type="number"
+              min={1}
+              max={7}
+              value={editingHabit.goal.frequency}
+              onChange={(e) =>
+                setEditingHabit((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        goal: { frequency: parseInt(e.target.value) || 1 },
+                      }
+                    : null
+                )
+              }
+              className="h-8 w-20 text-sm "
+            />
+          </div>
+        </div>
 
-                      <div>
-                        <label className="text-sm mb-2 block">Emoji</label>
-                        <EmojiPicker
-                          theme={Theme.DARK}
-                          lazyLoadEmojis
-                          height={350}
-                          width="100%"
-                          onEmojiClick={(emoji) => setEditingHabit(prev => prev ? ({
-                            ...prev,
-                            emoji: emoji.emoji
-                          }) : null)}
-                          autoFocusSearch
-                        />
-                      </div>
+        {/* Emoji Picker */}
+        <div>
+          <label className="text-xs mb-1 block text-muted-foreground">Emoji</label>
+          <EmojiPicker
+            theme={Theme.DARK}
+            lazyLoadEmojis
+            height={250}
+            width="100%"
+            onEmojiClick={(emoji) =>
+              setEditingHabit((prev) =>
+                prev ? { ...prev, emoji: emoji.emoji } : null
+              )
+            }
+            autoFocusSearch
+          />
+        </div>
 
-                      <div>
-                        <label className="text-sm mb-2 block">Color</label>
-                        <div className="flex gap-2">
-                          {PRESET_COLORS.map((color) => (
-                            <button
-                              key={color}
-                              className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ' : ''}`}
-                              style={{ backgroundColor: color }}
-                              onClick={() => setEditingHabit(prev => prev ? ({
-                                ...prev,
-                                color
-                              }) : null)}
-                            />
-                          ))}
-                        </div>
-                      </div>
+        {/* Color Selection */}
+        <div>
+          <label className="text-xs mb-1 block text-muted-foreground">Color</label>
+          <div className="flex gap-2 flex-wrap">
+            {PRESET_COLORS.map((color) => (
+              <button
+                key={color}
+                className={`w-7 h-7 rounded-full p-0 ${
+                  editingHabit.color === color ? "ring-2 ring-white" : ""
+                }`}
+                style={{ backgroundColor: color }}
+                onClick={() =>
+                  setEditingHabit((prev) => (prev ? { ...prev, color } : null))
+                }
+              />
+            ))}
+          </div>
+        </div>
 
-                      <Button
-                        onClick={() => updateHabit(editingHabit._id, editingHabit)}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        Save Changes
-                      </Button>
-                    </div>
-                  )}
-                </DialogContent>
-              </Dialog>
+        {/* Save Button */}
+        <Button
+          onClick={() => updateHabit(editingHabit._id, editingHabit)}
+          className="w-full h-9 text-sm bg-blue-600 hover:bg-blue-700 text-white"
+        >
+          Save Changes
+        </Button>
+      </div>
+    )}
+  </DialogContent>
+</Dialog>
+
 
             </div>
 

@@ -12,13 +12,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu } from "lucide-react";
 import Image from "next/image";
 
 export function Navigation() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [theme, setTheme] = useState("light");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -39,55 +40,55 @@ export function Navigation() {
 
   if (!session) return null;
 
+  const navLinks = [
+    { href: "/habits", label: "Habits" },
+    { href: "/profile", label: "Profile" },
+    { href: "/feedback", label: "Feedback" },
+    { href: "/analytics", label: "Analytics" },
+  ];
+
   return (
-    <nav className="border-b px-20 ">
-      <div className="flex h-16 items-center px-4 max-w-7xl mx-auto">
+    <nav className="border-b px-4 sm:px-6 lg:px-20">
+      <div className="flex h-16 items-center justify-between max-w-7xl mx-auto">
+        {/* Logo and hamburger */}
         <div className="flex items-center space-x-4">
-          <div className="flex flex-1 items-center cursor-pointer">
-            <Link href="/">
-              <Image
-                src={require("../../public/favicon.ico")}
-                className="h-8 w-8 rounded-full"
-                alt="Logo"
-              />
-            </Link>
-          </div>
-
-          <Link
-            href="/habits"
-            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/habits" ? "text-foreground" : "text-foreground/60"
-              }`}
-          >
-            Habits
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src={require("../../public/favicon.ico")}
+              className="h-8 w-8 rounded-full"
+              alt="Logo"
+            />
           </Link>
-          <Link
-            href="/profile"
-            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/profile" ? "text-foreground" : "text-foreground/60"
-              }`}
+          {/* Hamburger menu for mobile */}
+          <button
+            className="sm:hidden"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
-            Profile
-          </Link>
-          <Link
-            href="/feedback"
-            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "feedback" ? "text-foreground" : "text-foreground/60"
-              }`}
-
-          >
-            feedback
-          </Link>
-          <Link
-            href="/analytics"
-            className={`text-sm font-medium transition-colors hover:text-primary ${pathname === "/analytics" ? "text-foreground" : "text-foreground/60"
-              }`}
-
-          >
-            Analytics
-          </Link>
+            <Menu size={24} />
+          </button>
         </div>
-        <div className="ml-auto flex items-center space-x-4">
+
+        {/* Desktop Links */}
+        <div className="hidden sm:flex items-center space-x-6">
+          {navLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${pathname === href
+                ? "text-foreground"
+                : "text-foreground/60"
+                }`}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Right-side controls */}
+        <div className="flex items-center space-x-4">
           <Button
             onClick={toggleTheme}
-            className="px-4 py-2 rounded-full bg-card text-card-foreground flex items-center space-x-2"
+            className="px-2 sm:px-4 py-2 rounded-full bg-card text-card-foreground"
           >
             {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
           </Button>
@@ -108,6 +109,25 @@ export function Navigation() {
           </DropdownMenu>
         </div>
       </div>
+
+      {/* Mobile Links */}
+      {menuOpen && (
+        <div className="sm:hidden mt-2 flex flex-col space-y-2 px-2 pb-4">
+          {navLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${pathname === href
+                ? "text-foreground"
+                : "text-foreground/60"
+                }`}
+              onClick={() => setMenuOpen(false)}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

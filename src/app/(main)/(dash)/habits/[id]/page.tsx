@@ -275,21 +275,19 @@ export default function HabitPage() {
     <div className="container py-6 space-y-8">
       <div className="container mx-auto p-4 max-w-3xl">
         <div className="mb-8">
-          <Button
-            variant="ghost"
-            className="mb-4"
-            onClick={() => router.back()}
-          >
+          <Link href="/habits" className="mb-4">
+          <Button variant="ghost" className="">
             <ArrowLeft className="mr-2 h-8 w-8 text-2xl" />
             Back
           </Button>
+          </Link>
 
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
-              <span className="text-4xl">{habit.emoji}</span>
+              <span className="text-4xl sm:text-5xl">{habit.emoji}</span>
               <div>
-                <h1 className="text-3xl font-bold ">{habit.habitName}</h1>
-                <p className="text-gray-500">
+                <h1 className="text-2xl sm:text-3xl font-bold ">{habit.habitName}</h1>
+                <p className="text-gray-500 text-xs sm:text-base">
                   Goal: {habit.goal.frequency} times per week
                 </p>
               </div>
@@ -302,109 +300,124 @@ export default function HabitPage() {
                 <BookOpen className="h-4 w-4" />
               </Link>
               <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-gray-400 "
-                    onClick={() => {
-                      setEditingHabit({
-                        ...habit,
-                        habitName: habit.habitName || "",
-                        emoji: habit.emoji || "✨",
-                        color: habit.color || PRESET_COLORS[0],
+  <DialogTrigger asChild>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="text-gray-400"
+      onClick={() => {
+        setEditingHabit({
+          ...habit,
+          habitName: habit.habitName || "",
+          emoji: habit.emoji || "✨",
+          color: habit.color || PRESET_COLORS[0],
+          goal: {
+            frequency: habit.goal?.frequency || 7,
+          },
+        });
+      }}
+    >
+      <Pencil className="h-4 w-4" />
+    </Button>
+  </DialogTrigger>
+
+  <DialogContent className="w-[90%] max-w-xs p-4 max-h-[85vh] overflow-y-auto">
+    <DialogHeader>
+      <DialogTitle className="text-base">Edit Habit</DialogTitle>
+    </DialogHeader>
+
+    {editingHabit && (
+      <div className="space-y-3">
+        {/* Name & Goal */}
+        <div className="flex flex-col gap-3">
+          <div>
+            <label className="text-xs text-gray-400 mb-1 block">Name</label>
+            <Input
+              value={editingHabit.habitName}
+              onChange={(e) =>
+                setEditingHabit((prev) =>
+                  prev ? { ...prev, habitName: e.target.value } : null
+                )
+              }
+              className="text-sm h-8"
+            />
+          </div>
+          <div>
+            <label className="text-xs text-gray-400 mb-1 block">Goal</label>
+            <Input
+              type="number"
+              min={1}
+              max={7}
+              value={editingHabit.goal.frequency}
+              onChange={(e) => {
+                const value = parseInt(e.target.value);
+                setEditingHabit((prev) =>
+                  prev
+                    ? {
+                        ...prev,
                         goal: {
-                          frequency: habit.goal?.frequency || 7
-                        }
-                      });
-                    }}
-                  >
-                    <Pencil className="h-4 w-4 " />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-[300px]">
-                  <DialogHeader>
-                    <DialogTitle className="">Edit Habit</DialogTitle>
-                  </DialogHeader>
-                  {editingHabit && (
-                    <div className="space-y-4">
-                      <div className="flex gap-2">
-                        <div className="flex-1">
-                          <label className="text-sm text-gray-400 mb-2 block">Name</label>
-                          <Input
-                            value={editingHabit.habitName}
-                            onChange={(e) => setEditingHabit(prev => prev ? ({
-                              ...prev,
-                              habitName: e.target.value
-                            }) : null)}
-                            className=" border-gray-700 "
-                          />
-                        </div>
+                          frequency: value || 1,
+                        },
+                      }
+                    : null
+                );
+              }}
+              className="text-sm h-8 w-20"
+            />
+          </div>
+        </div>
 
-                        <div>
-                          <label className="text-sm text-gray-400 mb-2 block">Goal</label>
-                          <Input
-                            type="number"
-                            min={1}
-                            max={7}
-                            value={editingHabit.goal.frequency}
-                            onChange={(e) => {
-                              const value = parseInt(e.target.value);
-                              setEditingHabit(prev => prev ? ({
-                                ...prev,
-                                goal: {
-                                  frequency: value || 1
-                                }
-                              }) : null);
-                            }}
-                            className=" border-gray-700  w-20"
-                          />
-                        </div>
-                      </div>
+        {/* Emoji Picker */}
+        <div>
+          <label className="text-xs text-gray-400 mb-1 block">Emoji</label>
+          <div className="w-full">
+            <EmojiPicker
+              theme={Theme.AUTO}
+              height={250}
+              width="100%"
+              lazyLoadEmojis
+              onEmojiClick={(emoji) =>
+                setEditingHabit((prev) =>
+                  prev ? { ...prev, emoji: emoji.emoji } : null
+                )
+              }
+              autoFocusSearch
+            />
+          </div>
+        </div>
 
-                      <div>
-                        <label className="text-sm text-gray-400 mb-2 block">Emoji</label>
-                        <EmojiPicker
-                          theme={Theme.AUTO}
-                          lazyLoadEmojis
-                          height={350}
-                          width="100%"
-                          onEmojiClick={(emoji) => setEditingHabit(prev => prev ? ({
-                            ...prev,
-                            emoji: emoji.emoji
-                          }) : null)}
-                          autoFocusSearch
-                        />
-                      </div>
+        {/* Color Picker */}
+        <div>
+          <label className="text-xs text-gray-400 mb-1 block">Color</label>
+          <div className="flex gap-2 flex-wrap">
+            {PRESET_COLORS.map((color) => (
+              <Button
+                key={color}
+                className={`w-7 h-7 rounded-full p-0 ${
+                  editingHabit.color === color ? "ring-2 ring-white" : ""
+                }`}
+                style={{ backgroundColor: color }}
+                onClick={() =>
+                  setEditingHabit((prev) =>
+                    prev ? { ...prev, color } : null
+                  )
+                }
+              />
+            ))}
+          </div>
+        </div>
 
-                      <div>
-                        <label className="text-sm text-gray-400 mb-2 block">Color</label>
-                        <div className="flex gap-2">
-                          {PRESET_COLORS.map((color) => (
-                            <Button
-                              key={color}
-                              className={`w-8 h-8 rounded-full ${editingHabit.color === color ? 'ring-2 ring-white' : ''}`}
-                              style={{ backgroundColor: color }}
-                              onClick={() => setEditingHabit(prev => prev ? ({
-                                ...prev,
-                                color
-                              }) : null)}
-                            />
-                          ))}
-                        </div>
-                      </div>
-
-                      <Button
-                        onClick={handleSaveEdit}
-                        className="w-full bg-blue-600 hover:bg-blue-700 "
-                      >
-                        Save Changes
-                      </Button>
-                    </div>
-                  )}
-                </DialogContent>
-              </Dialog>
-
+        {/* Save Button */}
+        <Button
+          onClick={handleSaveEdit}
+          className="w-full h-9 text-sm bg-blue-600 hover:bg-blue-700"
+        >
+          Save
+        </Button>
+      </div>
+    )}
+  </DialogContent>
+</Dialog>
 
               <Button
                 variant="ghost"
