@@ -9,12 +9,10 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 
 export async function generateStaticParams() {
   const postsDirectory = path.join(process.cwd(), 'posts');
   const filenames = fs.readdirSync(postsDirectory);
-
   return filenames.map((filename) => ({
     id: filename.replace(/\.md$/, ''),
   }));
@@ -22,11 +20,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const filePath = path.join(process.cwd(), 'posts', `${params.id}.md`);
-
   if (!fs.existsSync(filePath)) {
-    return {
-      title: 'Not Found',
-    };
+    return { title: 'Not Found' };
   }
 
   const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -35,12 +30,17 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   return {
     title: data.title || params.id,
     description: data.excerpt || '',
+    openGraph: {
+      title: data.title,
+      description: data.excerpt || '',
+      url: `https://yourwebsite.com/blog/${params.id}`,
+      images: [{ url: data.image || 'default_image_url' }],
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const filePath = path.join(process.cwd(), 'posts', `${params.id}.md`);
-
   if (!fs.existsSync(filePath)) {
     notFound();
   }
@@ -48,11 +48,7 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
   const fileContents = fs.readFileSync(filePath, 'utf8');
   const { content, data } = matter(fileContents);
 
-  const processedContent = await remark()
-    .use(gfm)
-    .use(html)
-    .process(content);
-
+  const processedContent = await remark().use(gfm).use(html).process(content);
   const contentHtml = processedContent.toString();
 
   return (
@@ -67,30 +63,24 @@ export default async function BlogPostPage({ params }: { params: { id: string } 
           </Button>
         </div>
 
-          <article>
-            <header className="mb-8 pb-8 border-b">
-              <h1 className="text-4xl font-bold mb-4">{data.title}</h1>
-              <div className="flex items-center gap-4">
-                <time className="text-muted-foreground">
-                  {new Date(data.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </time>
-                {data.readTime && (
-                  <>
+        <article>
+          <header className="mb-8 pb-8 border-b">
+            <h1 className="text-4xl font-bold mb-4">{data.title}</h1>
+            <div className="flex items-center gap-4">
+              <time>{new Date(data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+              {data.readTime && (
+                <>
                   <span className="text-muted-foreground">·</span>
                   <span className="text-muted-foreground">{data.readTime} min read</span>
-                  </>
-                )}
-              </div>
-            </header>
-
-            <div className="prose prose-neutral dark:prose-invert max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+                </>
+              )}
             </div>
-          </article>
+          </header>
+
+          <div className="prose prose-neutral dark:prose-invert max-w-none">
+            <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+          </div>
+        </article>
       </div>
     </div>
   );

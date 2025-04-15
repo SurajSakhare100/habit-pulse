@@ -18,8 +18,15 @@ export default async function BlogPage() {
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
           <Link href={`/blogs/${post.id}`} key={post.id}>
-            <Card className="h-full cursor-pointer hover:shadow-lg transition-all duration-300 border-opacity-40">
-              <CardContent className="p-6">
+            <Card className="h-full cursor-pointer hover:shadow-lg transition-all duration-300 border-opacity-40 p-3">
+              {post?.bannerImage && (
+                <img
+                  src={post?.bannerImage}
+                  alt={`Banner image for ${post?.title}`}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+              )}
+              <CardContent className="w-full p-2 -mt-4">
                 <CardTitle className="text-xl mb-2 line-clamp-2">
                   {post.title}
                 </CardTitle>

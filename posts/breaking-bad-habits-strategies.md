@@ -1,8 +1,11 @@
 ---
 title: "Breaking Bad Habits: 5 Science-Backed Strategies That Work"
-date: "2025-04-08"
+date: "2025-04-2"
+excerpt: "A guide on building better habits and improving your life."
+bannerImage: "https://images.unsplash.com/photo-1732450210332-77e770cf381b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFkJTIwaGFiaXRzfGVufDB8MHwwfHx8MA%3D%3D"
 ---
 
+![Breaking Bad Habits](https://images.unsplash.com/photo-1732450210332-77e770cf381b?w=auto&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmFkJTIwaGFiaXRzfGVufDB8MHwwfHx8MA%3D%3D) 
 
 
 We all have them — habits we wish we could kick. Whether it's scrolling mindlessly, procrastinating, overeating, or hitting snooze one too many times, bad habits are hard to break.

@@ -8,6 +8,7 @@ type PostFrontMatter = {
   title?: string;
   date?: string;
   excerpt?: string;
+  bannerImage?: string;
 };
 
 export function getSortedPostsData() {

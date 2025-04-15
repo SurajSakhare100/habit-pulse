@@ -1,6 +1,8 @@
 ---
 title: "How to Build Good Habits That Stick"
 date: "2025-04-08"
+excerpt: "A guide on building better habits and improving your life."
+bannerImage: "/images/habits.jpeg"
 ---
 
 ![Habit tracking concept](/images/habits.jpeg) 
@@ -114,6 +116,5 @@ Remember:
 ---
 
 **So, what habit will you start today?**  
-Write it down. Make it visible. Take one small action — right now.
 
 > “First we make our habits, then our habits make us.” – Charles C. Noble

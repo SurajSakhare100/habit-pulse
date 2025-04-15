@@ -1,9 +1,11 @@
 ---
 title: "Best Habit Tracking Apps in 2025"
-date: "2025-04-08"
+date: "2025-03-13"
+excerpt: "A guide on building better habits and improving your life."
+bannerImage: "https://images.unsplash.com/photo-1614813231574-843cb1fb940b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFiaXR8ZW58MHwwfDB8fHww"
 ---
 
-![Habit tracking concept](/images/habits.jpeg)
+![Habit tracking concept](https://images.unsplash.com/photo-1614813231574-843cb1fb940b?w=auto&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFiaXR8ZW58MHwwfDB8fHww)
 
 Creating new habits isn't easy — but with the right tools, it's more achievable than ever. In 2025, the best habit-tracking apps go beyond simple checklists and reminders. They include data analytics, beautiful designs, gamification, and even social features.
 
