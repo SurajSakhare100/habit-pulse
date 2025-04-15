@@ -29,6 +29,7 @@ export default withAuth(
 // Match only protected routes
 export const config = {
   matcher: [
+    "/analytics",
     "/habits/:path*",
     "/profile",
     "/feedback",
