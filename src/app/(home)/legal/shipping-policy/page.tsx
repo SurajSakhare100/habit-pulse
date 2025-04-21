@@ -1,30 +1,36 @@
-import React from 'react';
+"use client";
+
+import React from "react";
 
 const ShippingPolicy: React.FC = () => {
   return (
-    <div className="max-w-5xl mx-auto my-10">
-      <h1 className="text-4xl font-semibold mb-6">Shipping & Delivery Policy</h1>
-      <p className="mb-4">Effective Date: April 20, 2025</p>
+    <div className="max-w-6xl mx-auto p-4">
+      <h1 className="text-4xl font-semibold mb-6">Shipping Policy</h1>
+      <p className="mb-4">Effective Date: April 21, 2025</p>
 
-      <p>
-        At <strong>Habit Pulse</strong>, we provide software-as-a-service (SaaS) products. As such, there are no physical goods involved and no traditional shipping methods required. This policy is designed to clarify how and when you will receive access to our digital offerings.
+      <p className="mb-6">
+        At <strong>Habit Pulse</strong>, we offer a fully digital product. As such, there is no physical shipping required for any of our services or offerings.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">1. Delivery of Services</h2>
-      <p>
-        All digital services and subscriptions are delivered electronically. Upon successful payment and account creation, your access to premium features will be enabled immediately or within a few minutes.
+      <h2 className="text-2xl font-semibold mt-6 mb-4">Digital Delivery</h2>
+      <p className="mb-4">
+        Once your account is created and payment is confirmed, you will gain instant access to our app and features. All content, features, and updates are delivered digitally via your registered email address and accessible through your account.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">2. Issues with Access</h2>
-      <p>
-        If you face any issues accessing your purchased services, contact us immediately with your transaction ID. We are committed to resolving technical or access-related issues as soon as possible.
+      <h2 className="text-2xl font-semibold mt-6 mb-4">Shipping Time</h2>
+      <p className="mb-4">
+        Since there is no physical shipment involved, there is no shipping time. Access to the Habit Pulse platform is typically available immediately after signup and successful payment processing.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">3. Contact Information</h2>
-      <p>
-        <strong>Email</strong>: sakharesuraj10@gmail.com<br />
-        <strong>Address</strong>: Vadgaon Road, Alandi, Pune 412105, India
+      <h2 className="text-2xl font-semibold mt-6 mb-4">Contact Us</h2>
+      <p className="mb-4">
+        If you have any questions about our shipping (digital delivery) process or need support accessing your account, feel free to reach out.
       </p>
+      <ul className="list-disc pl-6">
+        <li><strong>Email:</strong> <a href="mailto:sakharesuraj15@gmail.com" className="underline">sakharesuraj15@gmail.com</a></li>
+        <li><strong>Support Contact:</strong> +91 87670 82606</li>
+        <li><strong>Office Address:</strong> Vadgaon Road, Alandi, Pune 412105</li>
+      </ul>
     </div>
   );
 };
