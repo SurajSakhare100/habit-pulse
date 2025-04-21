@@ -1,8 +1,7 @@
 "use client";
 
-import { Instagram } from 'lucide-react';
+import { Instagram, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { Mail } from "lucide-react";
 
 export default function Footer({ border = false }: { border?: boolean }) {
   const handleSupportClick = () => {
@@ -13,16 +12,25 @@ export default function Footer({ border = false }: { border?: boolean }) {
     <footer>
       <div className="mx-auto max-w-6xl px-4 sm:px-6 border-t">
         <div
-          className={`grid gap-10 py-8 sm:grid-cols-12 md:py-12 ${border ? "border-t [border-image:linear-gradient(to_right,transparent,var(--color-slate-200),transparent)1]" : ""}`}
+          className={`grid gap-10 py-8 sm:grid-cols-12 md:py-12 ${
+            border
+              ? "border-t [border-image:linear-gradient(to_right,transparent,var(--color-slate-200),transparent)1]"
+              : ""
+          }`}
         >
+          {/* Branding & Address */}
           <div className="space-y-2 sm:col-span-12 lg:col-span-4">
-            <span className="ml-2 text-xl font-bold">Habit Pulse</span>
+            <span className="text-xl font-bold">Habit Pulse</span>
             <div className="text-sm text-gray-600">
               &copy; Habit Pulse - All rights reserved.
             </div>
+            <div className="text-sm text-gray-600 mt-2">
+              <strong>Office:</strong> Vadgaon Road, Alandi, Pune 412105<br />
+              <strong>Email:</strong> <a href="mailto:sakharesuraj10@gmail.com" className="underline">sakharesuraj10@gmail.com</a>
+            </div>
           </div>
 
-          {/* Product Links */}
+          {/* Partner Links */}
           <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
             <h3 className="text-sm font-medium">Partner Projects</h3>
             <ul className="space-y-2 text-sm">
@@ -41,26 +49,31 @@ export default function Footer({ border = false }: { border?: boolean }) {
             </ul>
           </div>
 
-          {/* Resources Links */}
+          {/* Legal & Support */}
           <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h3 className="text-sm font-medium">Other</h3>
+            <h3 className="text-sm font-medium">Legal</h3>
             <ul className="space-y-2 text-sm">
+              <li><Link href="/legal/about-us">About Us</Link></li>
               <li><Link href="/legal/privacy-policy">Privacy Policy</Link></li>
               <li><Link href="/legal/terms-of-service">Terms of Service</Link></li>
-              <button
-              onClick={handleSupportClick}
-              className="flex items-center gap-2 text-sm  hover:text-primary transition-colors"
-            >
-              <Mail size={16} />
-              Support
-            </button>
+              <li><Link href="/legal/refund-policy">Refund Policy</Link></li>
+              <li><Link href="/legal/shipping-policy">Shipping Policy</Link></li>
+              <li>
+                <button
+                  onClick={handleSupportClick}
+                  className="flex items-center gap-2 text-sm hover:text-primary transition-colors"
+                >
+                  <Mail size={16} />
+                  Support
+                </button>
+              </li>
             </ul>
           </div>
 
           {/* Social Links */}
           <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
             <h3 className="text-sm font-medium">Social</h3>
-            <ul className="flex gap-1">
+            <ul className="flex gap-3">
               <li>
                 <Link href="https://x.com/habitpulse" aria-label="Twitter">
                   <svg className="h-8 w-8 fill-current" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">

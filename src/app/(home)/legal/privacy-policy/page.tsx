@@ -2,7 +2,7 @@ import React from 'react';
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className="max-w-5xl mx-auto my-10">
       <h1 className="text-4xl font-semibold mb-6">HabitPulse Privacy Policy
       </h1>
       <p className="mb-4">Updated: march 20, 2025</p>
@@ -71,7 +71,7 @@ const PrivacyPolicy: React.FC = () => {
         If you are located outside of the country where Habit Pulse operates, your data may be transferred to and processed in other jurisdictions, including the United States, where data protection laws may differ from those in your country. By using Habit Pulse, you consent to this transfer and processing of your data.
       </p>
 
-      <h2 className="text-2xl font-semibold mt-6 mb-4">7. Children’s Privacy</h2>
+      <h2 className="text-2xl font-semibold mt-6 mb-4">7. Children's Privacy</h2>
       <p>
         Habit Pulse is not intended for children under the age of 13, and we do not knowingly collect personal information from children. If we discover that we have inadvertently collected personal information from a child under 13, we will take steps to delete that information as soon as possible.
       </p>

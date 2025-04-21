@@ -2,7 +2,7 @@ import React from 'react';
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className="max-w-6xl mx-auto p-4">
+    <div className="max-w-5xl mx-auto my-10">
       <h1 className="text-4xl font-semibold mb-6">HabitPulse Terms of Use</h1>
       <p className="mb-4">Updated: march 20, 2025</p>
 
@@ -46,7 +46,7 @@ const TermsOfService: React.FC = () => {
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">6. Privacy</h2>
       <p>
-        Your privacy is important to us. Please refer to our <a href="/privacy-policy" className="text-blue-500 hover:underline">Privacy Policy</a> for information about how we collect, use, and protect your personal data.
+        Your privacy is important to us. Please refer to our <a href="/legal/privacy-policy" className="text-blue-500 hover:underline">Privacy Policy</a> for information about how we collect, use, and protect your personal data.
       </p>
 
       <h2 className="text-2xl font-semibold mt-6 mb-4">7. Termination</h2>
