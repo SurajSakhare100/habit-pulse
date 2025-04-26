@@ -28,7 +28,6 @@ const ShippingPolicy: React.FC = () => {
       </p>
       <ul className="list-disc pl-6">
         <li><strong>Email:</strong> <a href="mailto:sakharesuraj15@gmail.com" className="underline">sakharesuraj15@gmail.com</a></li>
-        <li><strong>Support Contact:</strong> +91 87670 82606</li>
         <li><strong>Office Address:</strong> Vadgaon Road, Alandi, Pune 412105</li>
       </ul>
     </div>
