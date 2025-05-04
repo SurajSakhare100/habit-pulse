@@ -4,6 +4,12 @@ import dbConnect from '@/lib/db';
 import Habit from '@/models/Habit';
 import { subDays, format, isSameDay } from 'date-fns';
 
+interface Context {
+  params: {
+    id: string;
+  };
+}
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }

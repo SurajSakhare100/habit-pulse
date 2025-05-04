@@ -1,119 +1,94 @@
+// app/api/payment/create-order/route.ts
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import paypal from '@paypal/checkout-server-sdk';
+import Razorpay from 'razorpay';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
-import Payment from '@/models/Payment';
+import Order from '@/models/Order';
 
-// PayPal client configuration
-const clientId = process.env.PAYPAL_CLIENT_ID!;
-const clientSecret = process.env.PAYPAL_CLIENT_SECRET!;
-const environment = new paypal.core.LiveEnvironment(clientId, clientSecret);
-const client = new paypal.core.PayPalHttpClient(environment);
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+});
 
-const PRICE = 5.00;
-const CURRENCY = 'USD';
+const PRICE = 5.00;    // in INR
+const CURRENCY = 'INR';
 
-// Function to clean up stale pending payments
 const cleanupStalePayments = async (userId: string) => {
   const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
-  await Payment.deleteMany({
+  await Order.deleteMany({
     userId,
     status: 'PENDING',
-    createdAt: { $lt: fifteenMinutesAgo }
+    createdAt: { $lt: fifteenMinutesAgo },
   });
 };
 
 export async function POST(req: Request) {
   try {
     const session = await getServerSession();
-    
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     await dbConnect();
 
-    // Check if user exists and isn't already Pro
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    // Clean up stale pending payments
     await cleanupStalePayments(user._id);
 
-    // Check if user is already Pro
     if (user.isPro) {
-      // Check if they have a completed payment
-      const completedPayment = await Payment.findOne({
+      const done = await Order.findOne({
         userId: user._id,
-        status: 'COMPLETED'
+        status: 'COMPLETED',
       });
-
-      if (completedPayment) {
-        return NextResponse.json({ 
-          error: 'Already purchased', 
-          message: 'You have already purchased HabitPulse Pro!',
-          purchaseDate: completedPayment.createdAt
+      if (done) {
+        return NextResponse.json({
+          error: 'Already purchased',
+          message: 'You already have Pro access.',
+          purchaseDate: done.createdAt,
         }, { status: 400 });
       }
     }
-
-    // Check for pending payments
-    const pendingPayment = await Payment.findOne({
+    const pending = await Order.findOne({
       userId: user._id,
       status: 'PENDING',
-      createdAt: { $gt: new Date(Date.now() - 15 * 60 * 1000) } // Last 15 minutes
+      createdAt: { $gt: new Date(Date.now() - 15 * 60 * 1000) },
     });
-
-    if (pendingPayment) {
+    if (pending) {
       return NextResponse.json({ error: 'Pending payment exists' }, { status: 400 });
     }
 
-    const request = new paypal.orders.OrdersCreateRequest();
-    request.prefer("return=representation");
-    request.requestBody({
-      intent: 'CAPTURE',
-      purchase_units: [{
-        amount: {
-          currency_code: CURRENCY,
-          value: PRICE.toFixed(2)
-        },
-        description: 'HabitPulse Pro Upgrade'
-      }],
-      application_context: {
-        brand_name: 'HabitPulse',
-        return_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/capture-order`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment/cancelled`
-      }
-    });
-
-    const order = await client.execute(request);
-    
-    // Find the approval URL
-    const approvalUrl = order.result.links?.find((link: { rel: string; href: string }) => link.rel === 'approve')?.href;
-    const orderId = order.result.id;
-
-    if (!approvalUrl || !orderId) {
-      throw new Error('Invalid PayPal order response');
-    }
-
-    // Create pending payment record
-    await Payment.create({
-      userId: user._id,
-      paypalOrderId: orderId,
-      amount: PRICE,
+    const options = {
+      amount: Math.round(PRICE * 100),  // ₹ ×100 = paise
       currency: CURRENCY,
-      status: 'PENDING'
+      receipt: `rcpt_${Date.now()}`,
+      payment_capture: 1,
+    };
+    const order = await razorpay.orders.create(options);
+
+    await Order.create({
+      userId:       user._id,
+      razorpayOrderId: order.id,
+      amount:       PRICE,
+      currency:     CURRENCY,
+      status:       'PENDING',
     });
 
-    return NextResponse.json({ url: approvalUrl });
-  } catch (error) {
-    console.error('PayPal order creation error:', error);
+    return NextResponse.json({
+      orderId: order.id,
+      amount:  order.amount,
+      currency: order.currency,
+      key:     process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    });
+
+  } catch (err) {
+    console.error('Razorpay order creation error:', err);
     return NextResponse.json(
-      { error: 'Failed to create payment order' },
+      { error: 'Failed to create Razorpay order' },
       { status: 500 }
     );
   }
-} 
+}
