@@ -6,7 +6,6 @@ import Script from 'next/script';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useSession } from 'next-auth/react';
-import { Badge } from '@/components/ui/badge';
 
 interface PricingProps {
   onUpgrade?: () => void;
@@ -131,7 +130,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
         <div className="rounded-lg p-8 border  ">
           <h3 className="text-xl font-semibold  mb-4">Free</h3>
           <p className="text-3xl font-bold  mb-6">
-            $0<span className="text-lg font-normal ">/forever</span>
+          ₹ 0 <span className="text-lg font-normal ">/forever</span>
           </p>
 
           <ul className="space-y-4 mb-8">
@@ -163,8 +162,8 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
           <h3 className="text-xl font-semibold  mb-4">Pro</h3>
 
           <div className="flex flex-wrap items-end gap-2">
-            <p className="text-lg text-base-content/80 line-through mb-2">$49</p>
-            <p className="text-5xl font-extrabold tracking-tight ">$5</p>
+            <p className="text-lg text-base-content/80 line-through mb-2">₹999</p>
+            <p className="text-5xl font-extrabold tracking-tight ">₹99</p>
             <p className="text-sm text-base-content/60 font-semibold">
               / Lifetime deal (yours forever)
             </p>
@@ -193,9 +192,7 @@ const Pricing = ({ onUpgrade }: PricingProps) => {
             {isLoading ? 'Processing...' : session?.user?.isPro ? 'Already Pro' : 'Upgrade to Pro'}
           </Button>
 
-          <Badge className="flex items-center justify-center mt-4 bg-muted text-foreground text-xs">
-            for indian users pro plan is currently not available 😞
-          </Badge>
+        
         </div>
       </div>
     </div>

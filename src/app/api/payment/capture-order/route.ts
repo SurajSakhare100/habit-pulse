@@ -6,7 +6,7 @@ import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import Order from '@/models/Order';
 
-const EXPECTED_AMOUNT = 5.00;
+const EXPECTED_AMOUNT = 99.00;
 const EXPECTED_CURRENCY = 'INR';
 
 export async function POST(request: Request) {

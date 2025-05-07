@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
-const PRICE = 5.00;    // in INR
+const PRICE = 99.00;    // in INR
 const CURRENCY = 'INR';
 
 const cleanupStalePayments = async (userId: string) => {
